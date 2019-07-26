@@ -96,3 +96,4 @@ def singleGenerationToSymbolRepresentation(list):
                 [ [1] [1] [1] [1] [1] [0] [0] [1]]
               ]
     '''
+    print("Single Generation")

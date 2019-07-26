@@ -22,9 +22,8 @@ while True:
     AllErrorPatterns.append(line)
 receivedPacketFile.close()
 
-print(AllErrorPatterns[4407])
-GenerationsBit = IntoBitGeneration(AllErrorPatterns)
-# inner erros
+
+# inner errors
 
 
 def innerErrorDistributionCounter(AllErrorsByIndex):
@@ -113,6 +112,9 @@ lenghthsSentPacket = len(sentPacket)
 
 
 allRemoved = RemoveDifferentSize(AllErrorPatterns, lenghthsSentPacket)
+
+GenerationsBit = IntoBitGeneration(allRemoved)
+print(GenerationsBit)
 
 # numberofErrors in each received packet
 numberofInnerErrors = []

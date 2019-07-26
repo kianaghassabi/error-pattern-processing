@@ -9,6 +9,7 @@ if __name__ == '__main__':
 
 
     # just convert a generation to bit representation
+    
     # bitRep = 
 
 
