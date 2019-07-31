@@ -1,6 +1,15 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
+# def sentpacketconvertbit(Inputlist):
+#     binvalues = []
+#     for i in range(len(Inputlist)):
+#                 binaryValues=bin(int('1'+innerList[i], 16))[3:] 
+#                 # split it by bits
+#                 for x in binaryValues: 
+#                     binvalues.append(x)
+#     return binvalues
+
 # It works
 def convertErrorPatternIntoBitGeneration(Inputlist):
     ''' Entery is list of all error patterns 
@@ -25,8 +34,7 @@ def convertErrorPatternIntoBitGeneration(Inputlist):
     return errorPatternsInBitRep
 
 
-
-# function for removing elements with diffrent size
+# function for removing elements with diffrent size 
 def RemoveDifferentSize(listOfElements, mysize):
     newList = []
     totalDiffrentlength = 0
@@ -42,12 +50,15 @@ def RemoveDifferentSize(listOfElements, mysize):
     return newList
 
 
+
+
+# THIS FUNCTION WORKS WELL
 #reading from file
-def readFromFile():
+def readFromFile(fileaddress):
     # a list containing all errors
     AllErrorPatterns = []
     # open File
-    receivedPacketFile = open("ReceivedPackets1.txt", "r")
+    receivedPacketFile = open(fileaddress, "r")
     while True:
         # get line by line
         readline = receivedPacketFile.readline()
@@ -61,7 +72,7 @@ def readFromFile():
     receivedPacketFile.close()
     return AllErrorPatterns
 
-
+# THIS FUNCTION WORKS WELL
 # count the number of unmatched symbols
 def getDiffrences(list1, list2):
     count = 0
@@ -70,17 +81,44 @@ def getDiffrences(list1, list2):
             count += 1
     return count
 
+# THIS FUNCTION WORKS WELL
 #per symbol
 def getDiffrencesIndex(list1, list2):
     indecies = []
     for i in range(len(list1)):
+        # print("list2[i],",list2[i])
+        # print("list1[i],",list1[i])
         if list1[i] != list2[i]:
             indecies.append(i)
 
     return indecies
 
-#per symbol
+# THIS FUNCTION WORKS WELL
+#PER SYMBOL It will return the indecices containing  errors
 def ErrorIndices(ListSentPacket,ListErrorPatterns):
+    indicesOferrors=[]
+    # print("ListSentPacket",ListSentPacket)
+    # print("ListErrorPatterns",ListErrorPatterns)
+    for i in range(len(ListErrorPatterns)):
+        print("----List Error Patterns[i]",ListErrorPatterns[i])
+        print("----List sent packet",ListSentPacket)
+        indices = getDiffrencesIndex(ListSentPacket[0], ListErrorPatterns[i])
+        indicesOferrors.append(indices)
+    return indicesOferrors
+
+# THIS FUNCTION WORKS WELL
+#number of Inner Errors in each symbol per generetion
+#per symbol dar har symbol chand khata vujud darad=[1,3,4]:dar avali yeki dar dovomi 3ta dar sevomi 4 ta
+def TotalBitFlipPerGeneration(ListSentPacket,ListErrorPatterns):
+    numberofInnerErrors=[]
+    for i in range(len(ListErrorPatterns)):
+        count = getDiffrences(ListSentPacket[0], ListErrorPatterns[i])
+        numberofInnerErrors.append(count)
+    return numberofInnerErrors
+
+
+#PER SYMBOL It will return the indecices containing  errors
+def ErrorIndicesbit(ListSentPacket,ListErrorPatterns):
     indicesOferrors=[]
     for i in range(len(ListErrorPatterns)):
         indices = getDiffrencesIndex(sentPacket, ListErrorPatterns[i])
@@ -88,63 +126,43 @@ def ErrorIndices(ListSentPacket,ListErrorPatterns):
     return indicesOferrors
 
 
-#per symbol
-def TotalBitFlipPerGeneration(ListSentPacket,ListErrorPatterns):
-    numberofInnerErrors=[]
-    for i in range(len(ListErrorPatterns)):
-        count = getDiffrences(sentPacket, ListErrorPatterns[i])
-        numberofInnerErrors.append(count)
-    return numberofInnerErrors
 
+sentPacket = [['53', '65', '6E', '64', '69', '6E', '67', '20', '4D', '65', '73', '73', '61', '67',
+              '65', '20', '49', '73', '20', '57', '6F', '72', '6B', '69', '6E', '67', '20', '46', '69', '6E', '65']]
 
-# perbit
-def getDiffrencesperbit(list1, list2):
-    count = 0
-    for i in range(len(list1)):
-        if list1[i] != list2[i]:
-            count += 1
-    return count
-
-
-
-#per bit :retunrs index per symbol
-def getDiffrentIndices(list1, list2):
-    indecies = []
-    for i in range(len(list1)):
-        index=[]
-        for x in i:
-            if list1[i][x] != list2[i][x]:
-                index.append(x)
-        indecies.append(index)
-    return indecies
-
-#per bit
-def ErrorsIndices(ListSentPacket,ListErrorPatterns):
-    indicesOferrors=[]
-    for i in range(len(ListErrorPatterns)):
-        indices = getDiffrencesIndices(sentPacket, ListErrorPatterns[i])
-        indicesOferrors.append(indices)
-    return indicesOferrors
-
-
-#per bit
-def TotalBitFlipPerGeneration(ListSentPacket,ListErrorPatterns):
-    numberofInnerErrors=[]
-    for i in range(len(ListErrorPatterns)):
-        count = getDiffrences(sentPacket, ListErrorPatterns[i])
-        numberofInnerErrors.append(count)
-    return numberofInnerErrors
-
-
-sentPacket = ['53', '65', '6E', '64', '69', '6E', '67', '20', '4D', '65', '73', '73', '61', '67',
+recivedPack = [['52', '65', '6E', '64', '69', '6E', '67', '20', '4D', '65', '73', '73', '61', '67',
               '65', '20', '49', '73', '20', '57', '6F', '72', '6B', '69', '6E', '67', '20', '46', '69', '6E', '65']
+              ,
+              ['53', '65', '6E', '64', '69', '6E', '67', '20', '4D', '65', '73', '73', '61', '67',
+              '65', '20', '49', '73', '20', '57', '6F', '72', '6B', '69', '6E', '67', '20', '46', '69', '6E', '65']
+              ]
+#########################################PER BITS##################################################
 
 sentPacketInBits=convertErrorPatternIntoBitGeneration(sentPacket)
-readfile=readFromFile()
-ErrorPatternsinHexByte=RemoveDifferentSize(readfile,len(sentPacket))
-ErrorPatternsinBinBit=convertErrorPatternIntoBitGeneration(ErrorPatternsinHexByte)
-IndiciesOfError=ErrorIndices(sentPacket,ErrorPatternsinBinBit)
-NumberofInnerErrors=TotalBitFlipPerGeneration(sentPacket,ErrorPatternsinBinBit)
+print("sentPacketInBits->",sentPacketInBits)
+# print("len(sentPacketInBits)",len(sentPacketInBits)*8)
 
-# print('NumberofInnerErrors,',NumberofInnerErrors)
-print('IndiciesOfError',IndiciesOfError)
+#remove the packets with  diffrent lengthes in bits
+ErrorPatternsinHexByte=RemoveDifferentSize(recivedPack,31)
+print("****************************" , ErrorPatternsinHexByte)
+
+#convert all recieved packets into bits e.g.  '53'='0', '1', '0', '1', '0', '0', '1', '1'
+ErrorPatternsinBinBit=convertErrorPatternIntoBitGeneration(ErrorPatternsinHexByte)
+print("ErrorPatternsinBinBit->",ErrorPatternsinBinBit)
+
+#248 = 31*8
+errorPatternSplitedBit=RemoveDifferentSize(ErrorPatternsinBinBit,248)
+# print('len(errorPatternSplitedBit',len(errorPatternSplitedBit))
+            
+# THIS FUNCTION WORKS WELL
+#Errors per symbol 
+IndiciesOfError=ErrorIndices(sentPacketInBits,errorPatternSplitedBit) 
+#print(indiciedoferror) will give :  [[0, 1, 2, 3, 4, 5], [0, 1, 2, 3, 4, 27, 28, 29, 30]]
+print("IndiciesOfError->>>>",IndiciesOfError)
+
+
+# THIS FUNCTION WORKS WELL
+# #number of Inner Errors in each symbol per generetion
+NumberofInnerErrors=TotalBitFlipPerGeneration(sentPacketInBits,errorPatternSplitedBit)
+print('NumberofInnerErrors,',NumberofInnerErrors)
+#print(NumberofInnerErrors) will give :  [6, 9]

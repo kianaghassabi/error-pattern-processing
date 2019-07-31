@@ -1,23 +1,4 @@
 import string
-# hex2bin
-
-#
-h = ['53', '65', '6E', '64', '69', '6E', '67', '20', '4D', '65', '73', '73', '61', '67',
-     '65', '20', '49', '73', '20', '57', '6F', '72', '6B', '69', '6E', '67', '20', '46', '69', '6E', '65']
-
-# binvalues=[]
-# for i in range(len(h)):
-#     binaryValues=bin(int('1'+h[i], 16))[3:]
-#     # split it by bits
-#     for x in binaryValues:
-#         binvalues.append(x)
-
-#  making a list of list
-hPrime = []
-hPrime.append(h)
-hPrime.append(h)
-hPrime.append(h)
-
 
 # It works
 def convertErrorPatternIntoBitGeneration(list):
@@ -31,22 +12,23 @@ def convertErrorPatternIntoBitGeneration(list):
     ]
 
     '''
-    errorPatternsInBitRep = []
-    counter = 0
-    for innerList in list:
-        counter += 1
-        print(counter)
+    errorPatternsInBitRep = [] 
+    counter = 0 
+    for innerList in list: 
+        counter +=1
+        # print(counter)
         binvalues = []
         for i in range(len(innerList)):
-            binaryValues = bin(int('1'+innerList[i], 16))[3:]
-            # split it by bits
-            for x in binaryValues:
+            binaryValues=bin(int('1'+innerList[i], 16))[3:] 
+             # split it by bits
+            for x in binaryValues: 
                 binvalues.append(x)
         errorPatternsInBitRep.append(binvalues)
     return errorPatternsInBitRep
+         
 
 
-# It also works fine
+# It also works fine 
 def convertErrorPatternIntoBitSymbol(list):
     ''' 
     Entery is list of all error patterns 
@@ -59,40 +41,113 @@ def convertErrorPatternIntoBitSymbol(list):
     ]
 
     '''
-    errorPatternsInBitRep = []
-    for innerList in list:
-        binvalues = []
+    errorPatternsInBitRep = [] 
+    for innerList in list: 
+        binvalues = [] 
         for i in range(len(innerList)):
-            binaryValues = bin(int('1'+innerList[i], 16))[3:]
-            # split it by bits
+            binaryValues=bin(int('1'+innerList[i], 16))[3:] 
+             # split it by bits
             binvalues.append([x for x in binaryValues])
         errorPatternsInBitRep.append(binvalues)
     return errorPatternsInBitRep
 
 
-def singleGenerationToBitRepresentation(list):
+# THIS FUNCTION WORKS WELL
+#reading from file
+def readFromFile(fileaddress):
+    # a list containing all errors
+    AllErrorPatterns = []
+    # open File
+    receivedPacketFile = open(fileaddress, "r")
+    while True:
+        # get line by line
+        readline = receivedPacketFile.readline()
+        readline = readline.strip()
+        line = readline.split(' ')
+        # end of file
+        if not readline:
+            break
+        # addding to the list of all errors so we would have a list conting other lists
+        AllErrorPatterns.append(line)
+    receivedPacketFile.close()
+    return AllErrorPatterns
 
-    '''
-    Change a single generation in Hex form int a single generation into bit representation
+# THIS FUNCTION WORKS WELL
+# count the number of unmatched symbols
+def getDiffrences(list1, list2):
+    count = 0
+    for i in range(len(list1)):
+        if list1[i] != list2[i]:
+            count += 1
+    return count
 
-    FF AF  ---> 1111 1111  1001 1111
-    
-    '''
+# THIS FUNCTION WORKS WELL
+#per symbol
+def getDiffrencesIndex(list1, list2):
+    indecies = []
+    for i in range(len(list1)):
+        if list1[i] != list2[i]:
+            indecies.append(i)
 
-    binvalues = [] 
-    innerList = []
-    for i in range(len(innerList)):
-        binaryValues = bin(int('1'+innerList[i], 16))[3:]
-        # split it by bits
-    for x in binaryValues:
-        binvalues.append(x)
+    return indecies
+
+# function for removing elements with diffrent size 
+def RemoveDifferentSize(listOfElements, mysize):
+    newList = []
+    totalDiffrentlength = 0
+    for i in range(len(listOfElements)):
+        sizeofElement = len(listOfElements[i])
+        # print('size of elemnt:',sizeofElement,',','mysize:',mysize)
+        if sizeofElement != mysize:
+            #  listOfElements.remove(listOfElements[i])
+            totalDiffrentlength += 1
+        else:
+            newList.append(listOfElements[i])
+    # print('totalDiffrentlength',totalDiffrentlength)
+    return newList
+
+# THIS FUNCTION WORKS WELL
+#PER SYMBOL It will return the indecices containing  errors
+def ErrorIndices(ListSentPacket,ListErrorPatterns):
+    indicesOferrors=[]
+    for i in range(len(ListErrorPatterns)):
+        indices = getDiffrencesIndex(ListSentPacket[0], ListErrorPatterns[i])
+        indicesOferrors.append(indices)
+    return indicesOferrors
 
 
-def singleGenerationToSymbolRepresentation(list): 
-    '''
-    Change the single generation into symbol into bit representation
-    FF AF => [
-                [ [1] [1] [1] [1] [1] [1] [1] [1]]
-                [ [1] [1] [1] [1] [1] [0] [0] [1]]
-              ]
-    '''
+    # THIS FUNCTION WORKS WELL
+
+
+#number of Inner Errors in each symbol per generetion
+#per symbol dar har symbol chand khata vujud darad=[1,3,4]:dar avali yeki dar dovomi 3ta dar sevomi 4 ta
+def TotalBitFlipPerGeneration(ListSentPacket,ListErrorPatterns):
+    numberofInnerErrors=[]
+    for i in range(len(ListErrorPatterns)):
+        count = getDiffrences(ListSentPacket[0], ListErrorPatterns[i])
+        numberofInnerErrors.append(count)
+    return numberofInnerErrors
+
+
+# THIS FUNCTION WORKS WELL
+#PER SYMBOL It will return the indecices containing  errors
+def ErrorIndicesforbits(ListSentPacket,ListErrorPatterns):
+    indicesOferrors=[]
+    # print("ListSentPacket",ListSentPacket)
+    # print("ListErrorPatterns",ListErrorPatterns)
+    for i in range(len(ListErrorPatterns)):
+        # print("----List Error Patterns[i]",ListErrorPatterns[i])
+        # print("----List sent packet",ListSentPacket)
+        indices = getDiffrencesIndex(ListSentPacket[0], ListErrorPatterns[i])
+        indicesOferrors.append(indices)
+    return indicesOferrors
+
+# THIS FUNCTION WORKS WELL
+#number of Inner Errors in each symbol per generetion
+#per symbol dar har symbol chand khata vujud darad=[1,3,4]:dar avali yeki dar dovomi 3ta dar sevomi 4 ta
+def TotalBitFlipPerGenerationforbits(ListSentPacket,ListErrorPatterns):
+    numberofInnerErrors=[]
+    for i in range(len(ListErrorPatterns)):
+        count = getDiffrences(ListSentPacket[0], ListErrorPatterns[i])
+        numberofInnerErrors.append(count)
+    return numberofInnerErrors
