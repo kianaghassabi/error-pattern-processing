@@ -233,6 +233,35 @@ def plotter(numberOfBits, resultList, PlotTitle, plotXLabel, pltYLabel, XrangeFr
     plt.show()
 
 
+def burstErrorCalculatorForBit(list):
+    '''
+    Shows the number of burst errors over all-error-patterns
+    e.g., [0,10,11]
+    0 error with length 0, 
+    10 errors with lenght 1
+    '''
+    burstErrorData = [0 for i in range(0, 248)]
+
+    for i in range(len(list)):
+        continuousCounter = 1
+        for j in range(1, len(list[i])):
+            if(j == len(list[i]) - 1):
+                if (list[i][j-1] + 1 == list[i][j]):
+                    burstErrorData[continuousCounter] += 1
+                    continuousCounter = 1
+                else:
+                    burstErrorData[continuousCounter] += 1
+                    burstErrorData[1] += 1
+
+            else: 
+                if (list[i][j-1] + 1 == list[i][j]):
+                    continuousCounter += 1
+                else:
+                    burstErrorData[continuousCounter] += 1
+                    continuousCounter = 1
+    return burstErrorData
+
+
 # def innerErrorDistributionPercentage(AllErrorsByIndex):
 #     answer = []
 #     print("AllErrorsByIndex in function fopr count", AllErrorsByIndex)
