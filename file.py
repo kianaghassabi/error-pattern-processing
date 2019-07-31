@@ -100,8 +100,8 @@ def ErrorIndices(ListSentPacket,ListErrorPatterns):
     # print("ListSentPacket",ListSentPacket)
     # print("ListErrorPatterns",ListErrorPatterns)
     for i in range(len(ListErrorPatterns)):
-        print("----List Error Patterns[i]",ListErrorPatterns[i])
-        print("----List sent packet",ListSentPacket)
+        # print("----List Error Patterns[i]",ListErrorPatterns[i])
+        # print("----List sent packet",ListSentPacket)
         indices = getDiffrencesIndex(ListSentPacket[0], ListErrorPatterns[i])
         indicesOferrors.append(indices)
     return indicesOferrors
@@ -134,21 +134,25 @@ recivedPack = [['52', '65', '6E', '64', '69', '6E', '67', '20', '4D', '65', '73'
               '65', '20', '49', '73', '20', '57', '6F', '72', '6B', '69', '6E', '67', '20', '46', '69', '6E', '65']
               ,
               ['53', '65', '6E', '64', '69', '6E', '67', '20', '4D', '65', '73', '73', '61', '67',
+              '65', '20', '49', '73', '20', '57', '6F', '72', '6B', '69', '6E', '67', '20', '46', '69', '6E', '65']   
+             
+             ,
+              ['53', '65', '6E', '64', '69', '6E', '67', '20', '4D', '65', '73', '73', '61', '67',
               '65', '20', '49', '73', '20', '57', '6F', '72', '6B', '69', '6E', '67', '20', '46', '69', '6E', '65']
               ]
 #########################################PER BITS##################################################
 
 sentPacketInBits=convertErrorPatternIntoBitGeneration(sentPacket)
-print("sentPacketInBits->",sentPacketInBits)
+# print("sentPacketInBits->",sentPacketInBits)
 # print("len(sentPacketInBits)",len(sentPacketInBits)*8)
 
 #remove the packets with  diffrent lengthes in bits
 ErrorPatternsinHexByte=RemoveDifferentSize(recivedPack,31)
-print("****************************" , ErrorPatternsinHexByte)
+# print("****************************" , ErrorPatternsinHexByte)
 
 #convert all recieved packets into bits e.g.  '53'='0', '1', '0', '1', '0', '0', '1', '1'
 ErrorPatternsinBinBit=convertErrorPatternIntoBitGeneration(ErrorPatternsinHexByte)
-print("ErrorPatternsinBinBit->",ErrorPatternsinBinBit)
+# print("ErrorPatternsinBinBit->",ErrorPatternsinBinBit)
 
 #248 = 31*8
 errorPatternSplitedBit=RemoveDifferentSize(ErrorPatternsinBinBit,248)
@@ -166,3 +170,65 @@ print("IndiciesOfError->>>>",IndiciesOfError)
 NumberofInnerErrors=TotalBitFlipPerGeneration(sentPacketInBits,errorPatternSplitedBit)
 print('NumberofInnerErrors,',NumberofInnerErrors)
 #print(NumberofInnerErrors) will give :  [6, 9]
+
+
+###############################PLOT##############################
+def innerErrorDistributionCounter(AllErrorsByIndex):
+    answer = []
+    for i in range(31):
+        answer.append(AllErrorsByIndex.count(i))
+
+    return answer
+
+
+def innerErrorDistributionPercentage(AllErrorsByIndex):
+    answer = []
+    for i in range(248):
+        answer.append((float(AllErrorsByIndex.count(i)) /
+                       float(len(AllErrorsByIndex)))*100)
+
+    return answer
+
+mu, sigma = 100, 15
+# x = mu + sigma * np.random.randn(10000)
+x = []
+# for i in range (len(numberofInnerErrors)):
+#     x.append(i)
+
+
+# density of inner errors
+
+for i in range(248):
+    x.append(i)
+
+# the histogram of the data
+
+
+# n = plt.bar(x,totalSpecificNumoferrors(numberofInnerErrors))
+# plt.xlabel('#Inner errors')
+# plt.ylabel('#Packets')
+
+
+# innerErrorDistributionPercentage
+# print(innerErrorDistributionPercentage(numberofInnerErrors))
+# n = plt.bar(x,innerErrorDistributionPercentage(numberofInnerErrors))
+# plt.title('Inner Error Distribution count')
+# plt.xlabel('#Inner errors')
+# plt.ylabel("#Packet")
+
+
+# innerErrorDistributionPercentage
+print(innerErrorDistributionPercentage(NumberofInnerErrors))
+n = plt.bar(x, innerErrorDistributionPercentage(NumberofInnerErrors))
+plt.title('Inner Error Distribution Percentage')
+plt.xlabel('#Inner errors')
+plt.ylabel("Packet Percentage")
+
+
+# plt.xlabel('#Packet index ( in receiving order ) ')
+# plt.ylabel('#Errors')
+# plt.title('Histogram of IQ')
+# plt.text(60, .025, r'$\mu=100,\sigma=15$')
+plt.axis([0, 31, 0, 45])
+plt.grid(True)
+plt.show()

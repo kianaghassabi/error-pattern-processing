@@ -164,8 +164,8 @@ for i in range(31):
 
 
 # innerErrorDistributionPercentage
-print(innerErrorDistributionPercentage(numberofInnerErrors))
-n = plt.bar(x, innerErrorDistributionPercentage(numberofInnerErrors))
+print(numberofInnerErrors)
+n = plt.bar(x, numberofInnerErrors)
 plt.title('Inner Error Distribution Percentage')
 plt.xlabel('#Inner errors')
 plt.ylabel("Packet Percentage")

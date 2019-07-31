@@ -1,15 +1,20 @@
 from hextobin import convertErrorPatternIntoBitGeneration as IntoBitGeneration , convertErrorPatternIntoBitSymbol as IntoBitSymbol
 from hextobin import RemoveDifferentSize,TotalBitFlipPerGeneration,ErrorIndices,readFromFile,TotalBitFlipPerGenerationforbits,ErrorIndicesforbits
+from hextobin import Plot
+import matplotlib.pyplot as plt
 
 
 sentPacket = [['53', '65', '6E', '64', '69', '6E', '67', '20', '4D', '65', '73', '73', '61', '67',
               '65', '20', '49', '73', '20', '57', '6F', '72', '6B', '69', '6E', '67', '20', '46', '69', '6E', '65']]
 
-recivedPack = [['15', '65', '6E', '64', '69', '6E', '67', '20', '4D', '65', '73', '73', '61', '67',
+recivedPack = [['53', '65', '6E', '64', '69', '6E', '67', '20', '4D', '65', '73', '73', '61', '67',
               '65', '20', '49', '73', '20', '57', '6F', '72', '6B', '69', '6E', '67', '20', '46', '69', '6E', '65']
               ,
-              ['53', '65', '6E', '64', '69', '6E', '67', '20', '4D', '65', '73', '73', '61', '67',
+              ['51', '65', '2E', '64', '39', '6E', '67', '20', '4D', '65', '73', '73', '61', '67',
               '65', '20', '49', '73', '20', '57', '6F', '72', '6B', '69', '6E', '67', '20', '46', '69', '6E', '65']
+              ,
+             ['52', '65', '6E', '64', '69', '6E', '67', '20', '4D', '65', '73', '73', '61', '67',
+              '65', '20', '49', '73', '20', '57', '6F', '72', '6B', '69', '6E', '67', '20', '46', '69', '6E', '15']
               ]
 
 #BYTE FUNCTIONS
@@ -21,6 +26,7 @@ readfile=readFromFile("ReceivedPackets1.txt")
 
 #remove the packets with  diffrent lengthes
 ErrorPatternsinHexByte=RemoveDifferentSize(recivedPack,31)
+print("------BYTE-------")
 
 
 #THIS FUNCTION WORKS WELL
@@ -35,7 +41,7 @@ NumberofInnerErrors=TotalBitFlipPerGeneration(sentPacket,ErrorPatternsinHexByte)
 print('NumberofInnerErrors - byte: ',NumberofInnerErrors)
 #print(NumberofInnerErrors) will give :  [6, 9]
 
-
+print("------BIT-------")
 #########################################PER BITS##################################################
 
 sentPacketInBits=IntoBitGeneration(sentPacket)
@@ -66,3 +72,7 @@ print("IndiciesOfError - bit",IndiciesOfError)
 NumberofInnerErrors=TotalBitFlipPerGenerationforbits(sentPacketInBits,errorPatternSplitedBit)
 print('NumberofInnerErrors - bit',NumberofInnerErrors)
 #print(NumberofInnerErrors) will give :  [6, 9]
+
+
+
+Plot(248,IndiciesOfError,"Error indicies in bits","#Inner errors","Packet Percentage",0,248,0,45)
