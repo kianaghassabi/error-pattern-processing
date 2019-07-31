@@ -1,19 +1,19 @@
 from hextobin import convertErrorPatternIntoBitGeneration as IntoBitGeneration , convertErrorPatternIntoBitSymbol as IntoBitSymbol
 from hextobin import RemoveDifferentSize,TotalBitFlipPerGeneration,ErrorIndices,readFromFile,TotalBitFlipPerGenerationforbits,ErrorIndicesforbits
-from hextobin import Plot
+from hextobin import Plot , innerErrorDistributionCounter
 import matplotlib.pyplot as plt
 
 
 sentPacket = [['53', '65', '6E', '64', '69', '6E', '67', '20', '4D', '65', '73', '73', '61', '67',
               '65', '20', '49', '73', '20', '57', '6F', '72', '6B', '69', '6E', '67', '20', '46', '69', '6E', '65']]
 
-recivedPack = [['53', '65', '6E', '64', '69', '6E', '67', '20', '4D', '65', '73', '73', '61', '67',
+recivedPack = [['50', '65', '6E', '64', '69', '6E', '67', '20', '4D', '65', '73', '73', '61', '67',
               '65', '20', '49', '73', '20', '57', '6F', '72', '6B', '69', '6E', '67', '20', '46', '69', '6E', '65']
               ,
-              ['51', '65', '2E', '64', '39', '6E', '67', '20', '4D', '65', '73', '73', '61', '67',
+              ['50', '65', '2E', '64', '39', '6E', '67', '20', '4D', '65', '73', '73', '61', '67',
               '65', '20', '49', '73', '20', '57', '6F', '72', '6B', '69', '6E', '67', '20', '46', '69', '6E', '65']
               ,
-             ['52', '65', '6E', '64', '69', '6E', '67', '20', '4D', '65', '73', '73', '61', '67',
+             ['50', '65', '6E', '64', '69', '6E', '67', '20', '4D', '65', '73', '73', '61', '67',
               '65', '20', '49', '73', '20', '57', '6F', '72', '6B', '69', '6E', '67', '20', '46', '69', '6E', '15']
               ]
 
@@ -71,8 +71,18 @@ print("IndiciesOfError - bit",IndiciesOfError)
 # #number of Inner Errors in each symbol per generetion
 NumberofInnerErrors=TotalBitFlipPerGenerationforbits(sentPacketInBits,errorPatternSplitedBit)
 print('NumberofInnerErrors - bit',NumberofInnerErrors)
-#print(NumberofInnerErrors) will give :  [6, 9]
 
 
+def plotBitErrorDistributionOverAllErrorPatterns(IndiciesOfError):
+    '''
+    Enter the indicies of error and you'll receive 
+    the count errors of each index over all given error patterns
+    '''
+    answer = innerErrorDistributionCounter(IndiciesOfError)
+    print (answer)
 
-Plot(248,IndiciesOfError,"Error indicies in bits","#Inner errors","Packet Percentage",0,248,0,45)
+
+plotBitErrorDistributionOverAllErrorPatterns(IndiciesOfError)
+
+print("End")
+# Plot(248,IndiciesOfError,"Error indicies in bits","#Inner errors","Packet Percentage",0,248,0,45)
