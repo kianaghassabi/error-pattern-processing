@@ -3,6 +3,8 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 # It works
+
+
 def convertErrorPatternIntoBitGeneration(list):
     ''' Entery is list of all error patterns 
     and return each generation in bit rep
@@ -28,8 +30,9 @@ def convertErrorPatternIntoBitGeneration(list):
         errorPatternsInBitRep.append(binvalues)
     return errorPatternsInBitRep
 
-
 # It also works fine
+
+
 def convertErrorPatternIntoBitSymbol(list):
     ''' 
     Entery is list of all error patterns 
@@ -53,7 +56,7 @@ def convertErrorPatternIntoBitSymbol(list):
     return errorPatternsInBitRep
 
 
-# THIS FUNCTION WORKS WELL 
+# THIS FUNCTION WORKS WELL
 def readFromFile(fileaddress):
     '''
     pass the file address as a string, 
@@ -114,7 +117,7 @@ def RemoveDifferentSize(listOfElements, mysize):
     removes arrays from given 2D array (input) which they have different size form given size
 
     '''
-    
+
     newList = []
     totalDiffrentlength = 0
     for i in range(len(listOfElements)):
@@ -150,7 +153,7 @@ def ErrorIndices(ListSentPacket, ListErrorPatterns):
 # per symbol dar har symbol chand khata vujud darad=[1,3,4]:dar avali yeki dar dovomi 3ta dar sevomi 4 ta
 def TotalBitFlipPerGeneration(ListSentPacket, ListErrorPatterns):
     '''
-    Returns number of bit errors per symbol in each generation
+    Returns the number of (bit/Symbol) errors per symbol (if bit is considered) in each generation
     It will get a list of generation and will calculate this for all of them 
     for instance, [[1,3,4] , ...] 
     means in the first generation and first symbol we have 1 bit error 
@@ -161,6 +164,9 @@ def TotalBitFlipPerGeneration(ListSentPacket, ListErrorPatterns):
         count = getDiffrences(ListSentPacket[0], ListErrorPatterns[i])
         numberofInnerErrors.append(count)
     return numberofInnerErrors
+
+
+# #####################################BIT SPECIFIC OPERATIONS###########################################
 
 
 # THIS FUNCTION WORKS WELL
@@ -176,39 +182,55 @@ def ErrorIndicesforbits(ListSentPacket, ListErrorPatterns):
         indicesOferrors.append(indices)
     return indicesOferrors
 
-# THIS FUNCTION WORKS WELL
-# number of Inner Errors in each symbol per generetion
-# per symbol dar har symbol chand khata vujud darad=[1,3,4]:dar avali yeki dar dovomi 3ta dar sevomi 4 ta
 
-
-def TotalBitFlipPerGenerationforbits(ListSentPacket, ListErrorPatterns):
-    numberofInnerErrors = []
-    for i in range(len(ListErrorPatterns)):
-        count = getDiffrences(ListSentPacket[0], ListErrorPatterns[i])
-        numberofInnerErrors.append(count)
-    return numberofInnerErrors
-
-
-    
 def innerErrorDistributionCounterForBit(AllErrorsByIndex):
     '''
     give you the total error counts in specific index over all error patterns
     for instance, in the first bit over all error patterns we saw X number of errors
     '''
-    answer = [ 0 for i in range (0,248)]
-    for i in range (len(AllErrorsByIndex)): 
+    answer = [0 for i in range(0, 248)]
+    for i in range(len(AllErrorsByIndex)):
         for j in range(len(AllErrorsByIndex[i])):
-            answer[AllErrorsByIndex[i][j]] +=1
+            answer[AllErrorsByIndex[i][j]] += 1
     return answer
 
 
 def innerErrorDistributionPercentageForBit(AllErrorsByIndex):
+    '''
+    returns you the percentage of error in specific index over all error patterns
+    for instance, 30% of all first bit over all-error-patterns are errors 
+
+    '''
+    numberOfAllPacket = len(AllErrorsByIndex)
     answer = []
-    print("AllErrorsByIndex in function for count",AllErrorsByIndex)
-    for i in range(248):
-        answer.append((float(AllErrorsByIndex.count(i)) /
-                       float(len(AllErrorsByIndex)))*100)
+    answer = [0 for i in range(0, 248)]
+    for i in range(len(AllErrorsByIndex)):
+        for j in range(len(AllErrorsByIndex[i])):
+            answer[AllErrorsByIndex[i][j]] += 1
+
+    for i in range(0, 248):
+        answer[i] = float(answer[i]) / float(numberOfAllPacket)
     return answer
+
+
+def plotter(numberOfBits, resultList, PlotTitle, plotXLabel, pltYLabel, XrangeFrom, XrangeTo, YrangeFrom, YrangeTo):
+    # initilizing
+    # mu = InputMu
+    # sigma = InputSimga
+    x = []
+    for i in range(numberOfBits):
+        x.append(i)
+
+    # innerErrorDistributionPercentage
+    # print(innerErrorDistributionPercentage(ListofInnerErrors)) what is it ?
+    plt.bar(x, resultList)
+    plt.title(PlotTitle)
+    plt.xlabel(plotXLabel)
+    plt.ylabel(pltYLabel)
+
+    plt.axis([XrangeFrom, XrangeTo, YrangeFrom, YrangeTo])
+    plt.grid(True)
+    plt.show()
 
 
 # def innerErrorDistributionPercentage(AllErrorsByIndex):
@@ -221,28 +243,7 @@ def innerErrorDistributionPercentageForBit(AllErrorsByIndex):
 #     return answer
 
 
-
 ###############################PLOT##############################
-def plotter(numberOfBits,resultList,PlotTitle,plotXLabel,pltYLabel,XrangeFrom,XrangeTo,YrangeFrom,YrangeTo):
-    # initilizing
-    # mu = InputMu
-    # sigma = InputSimga
-    x = []
-    for i in range(numberOfBits):
-        x.append(i)
-
-    # innerErrorDistributionPercentage
-    # print(innerErrorDistributionPercentage(ListofInnerErrors)) what is it ?
-    plt.bar(x,resultList) 
-    plt.title(PlotTitle)
-    plt.xlabel(plotXLabel)
-    plt.ylabel(pltYLabel)
-
-    plt.axis([XrangeFrom, XrangeTo, YrangeFrom, YrangeTo])
-    plt.grid(True)
-    plt.show()
-
-
 
 # I've commented this section because maybe we need it for byte operations
 # def innerErrorDistributionCounter(AllErrorsByIndex):
@@ -258,4 +259,17 @@ def plotter(numberOfBits,resultList,PlotTitle,plotXLabel,pltYLabel,XrangeFrom,Xr
 #     for i in range(248):
 #         answer.append((float(AllErrorsByIndex.count(i)) /
 #                        float(len(AllErrorsByIndex)))*100)
+
+
+# THIS FUNCTION WORKS WELL
+# number of Inner Errors in each symbol per generetion
+# per symbol dar har symbol chand khata vujud darad=[1,3,4]:dar avali yeki dar dovomi 3ta dar sevomi 4 ta
+
+# (NAZARI ASKING ... ) I've commented this function because it is not different from TotalBitFlipPerGeneration function
+# def TotalBitFlipPerGenerationforbits(ListSentPacket, ListErrorPatterns):
+#     numberofInnerErrors = []
+#     for i in range(len(ListErrorPatterns)):
+#         count = getDiffrences(ListSentPacket[0], ListErrorPatterns[i])
+#         numberofInnerErrors.append(count)
+#     return numberofInnerErrors
 #     return answer

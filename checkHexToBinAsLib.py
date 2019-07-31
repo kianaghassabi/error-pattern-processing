@@ -1,6 +1,6 @@
 from hextobin import convertErrorPatternIntoBitGeneration as IntoBitGeneration , convertErrorPatternIntoBitSymbol as IntoBitSymbol
-from hextobin import RemoveDifferentSize,TotalBitFlipPerGeneration,ErrorIndices,readFromFile,TotalBitFlipPerGenerationforbits,ErrorIndicesforbits
-from hextobin import plotter , innerErrorDistributionCounterForBit
+from hextobin import RemoveDifferentSize,TotalBitFlipPerGeneration,ErrorIndices,readFromFile,ErrorIndicesforbits
+from hextobin import plotter , innerErrorDistributionCounterForBit, innerErrorDistributionPercentageForBit
 import matplotlib.pyplot as plt
 
 
@@ -21,7 +21,9 @@ def plotBitErrorDistributionOverAllErrorPatternsByPercentage(IndiciesOfError):
     Enter the indicies of error and it'll calculate
     percentage of errors of each index over all given error patterns
     '''
-
+    answer = innerErrorDistributionPercentageForBit(IndiciesOfError)
+    plotter(248,answer,"Percentage of bit errors indicies distribution over all packets","indicies","%Error",0,248,0,1)
+    print (answer)
 
 
 
@@ -93,9 +95,10 @@ if __name__ == "__main__":
 
     # THIS FUNCTION WORKS WELL
     # #number of Inner Errors in each symbol per generetion
-    NumberofInnerErrors=TotalBitFlipPerGenerationforbits(sentPacketInBits,errorPatternSplitedBit)
+    NumberofInnerErrors=TotalBitFlipPerGeneration(sentPacketInBits,errorPatternSplitedBit)
     print('NumberofInnerErrors - bit',NumberofInnerErrors)
 
     plotBitErrorDistributionOverAllErrorPatterns(IndiciesOfError)
+    # plotBitErrorDistributionOverAllErrorPatternsByPercentage(IndiciesOfError)
 
     print("End")
