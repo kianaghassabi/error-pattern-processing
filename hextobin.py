@@ -55,9 +55,13 @@ def convertErrorPatternIntoBitSymbol(list):
     return errorPatternsInBitRep
 
 
-# THIS FUNCTION WORKS WELL
-# reading from file
+# THIS FUNCTION WORKS WELL 
 def readFromFile(fileaddress):
+    '''
+    pass the file address as a string, 
+    it reads the file and split each generations data into array of  1 byte elements 
+    You will receive a 2D array.
+    '''
     # a list containing all errors
     AllErrorPatterns = []
     # open File
@@ -80,6 +84,9 @@ def readFromFile(fileaddress):
 
 
 def getDiffrences(list1, list2):
+    '''
+    Counts the number of different elements in two lists (Elemenet-wise)
+    '''
     count = 0
     for i in range(len(list1)):
         if list1[i] != list2[i]:
@@ -91,6 +98,9 @@ def getDiffrences(list1, list2):
 
 
 def getDiffrencesIndex(list1, list2):
+    '''
+    Returns the index of which two lists (inputs) have different elements
+    '''
     indecies = []
     for i in range(len(list1)):
         if list1[i] != list2[i]:
@@ -102,6 +112,11 @@ def getDiffrencesIndex(list1, list2):
 
 
 def RemoveDifferentSize(listOfElements, mysize):
+    '''
+    removes arrays from given 2D array (input) which they have different size form given size
+
+    '''
+    
     newList = []
     totalDiffrentlength = 0
     for i in range(len(listOfElements)):
@@ -120,6 +135,10 @@ def RemoveDifferentSize(listOfElements, mysize):
 
 
 def ErrorIndices(ListSentPacket, ListErrorPatterns):
+    '''
+    returns a 2D list of error indices due to Sentpacket (First parameter) over all given List of errror patterns
+
+    '''
     indicesOferrors = []
     for i in range(len(ListErrorPatterns)):
         indices = getDiffrencesIndex(ListSentPacket[0], ListErrorPatterns[i])
@@ -132,6 +151,9 @@ def ErrorIndices(ListSentPacket, ListErrorPatterns):
 # number of Inner Errors in each symbol per generetion
 # per symbol dar har symbol chand khata vujud darad=[1,3,4]:dar avali yeki dar dovomi 3ta dar sevomi 4 ta
 def TotalBitFlipPerGeneration(ListSentPacket, ListErrorPatterns):
+    '''
+    
+    '''
     numberofInnerErrors = []
     for i in range(len(ListErrorPatterns)):
         count = getDiffrences(ListSentPacket[0], ListErrorPatterns[i])
@@ -196,8 +218,6 @@ def Plot(numberOfBits,ListofInnerErrors,PlotTitle,plotXLabel,pltYLabel,XrangeFro
     # initilizing
     # mu = InputMu
     # sigma = InputSimga
-
-
     x = []
     for i in range(numberOfBits):
         x.append(i)
