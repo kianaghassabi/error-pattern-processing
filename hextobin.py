@@ -3,8 +3,6 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 # It works
-
-
 def convertErrorPatternIntoBitGeneration(list):
     ''' Entery is list of all error patterns 
     and return each generation in bit rep
@@ -152,7 +150,11 @@ def ErrorIndices(ListSentPacket, ListErrorPatterns):
 # per symbol dar har symbol chand khata vujud darad=[1,3,4]:dar avali yeki dar dovomi 3ta dar sevomi 4 ta
 def TotalBitFlipPerGeneration(ListSentPacket, ListErrorPatterns):
     '''
-
+    Returns number of bit errors per symbol in each generation
+    It will get a list of generation and will calculate this for all of them 
+    for instance, [[1,3,4] , ...] 
+    means in the first generation and first symbol we have 1 bit error 
+    in the first generation and second symbol we have 3 bit errors
     '''
     numberofInnerErrors = []
     for i in range(len(ListErrorPatterns)):
@@ -186,24 +188,9 @@ def TotalBitFlipPerGenerationforbits(ListSentPacket, ListErrorPatterns):
         numberofInnerErrors.append(count)
     return numberofInnerErrors
 
-# I've commented this section because maybe we need it for byte operations
-# def innerErrorDistributionCounter(AllErrorsByIndex):
-#     answer = []
-#     for i in range(248):
-#         answer.append(AllErrorsByIndex.count(i))
-#     return answer
-
-
-# def innerErrorDistributionPercentage(AllErrorsByIndex):
-#     answer = []
-#     print("AllErrorsByIndex in function for count",AllErrorsByIndex)
-#     for i in range(248):
-#         answer.append((float(AllErrorsByIndex.count(i)) /
-#                        float(len(AllErrorsByIndex)))*100)
-#     return answer
 
     
-def innerErrorDistributionCounter(AllErrorsByIndex):
+def innerErrorDistributionCounterForBit(AllErrorsByIndex):
     '''
     give you the total error counts in specific index over all error patterns
     for instance, in the first bit over all error patterns we saw X number of errors
@@ -215,7 +202,7 @@ def innerErrorDistributionCounter(AllErrorsByIndex):
     return answer
 
 
-def innerErrorDistributionPercentage(AllErrorsByIndex):
+def innerErrorDistributionPercentageForBit(AllErrorsByIndex):
     answer = []
     print("AllErrorsByIndex in function for count",AllErrorsByIndex)
     for i in range(248):
@@ -236,7 +223,7 @@ def innerErrorDistributionPercentage(AllErrorsByIndex):
 
 
 ###############################PLOT##############################
-def Plot(numberOfBits,ListofInnerErrors,PlotTitle,plotXLabel,pltYLabel,XrangeFrom,XrangeTo,YrangeFrom,YrangeTo):
+def plotter(numberOfBits,resultList,PlotTitle,plotXLabel,pltYLabel,XrangeFrom,XrangeTo,YrangeFrom,YrangeTo):
     # initilizing
     # mu = InputMu
     # sigma = InputSimga
@@ -245,8 +232,8 @@ def Plot(numberOfBits,ListofInnerErrors,PlotTitle,plotXLabel,pltYLabel,XrangeFro
         x.append(i)
 
     # innerErrorDistributionPercentage
-    print(innerErrorDistributionPercentage(ListofInnerErrors))
-    plt.bar(x,innerErrorDistributionPercentage(ListofInnerErrors)) 
+    # print(innerErrorDistributionPercentage(ListofInnerErrors)) what is it ?
+    plt.bar(x,resultList) 
     plt.title(PlotTitle)
     plt.xlabel(plotXLabel)
     plt.ylabel(pltYLabel)
@@ -254,3 +241,21 @@ def Plot(numberOfBits,ListofInnerErrors,PlotTitle,plotXLabel,pltYLabel,XrangeFro
     plt.axis([XrangeFrom, XrangeTo, YrangeFrom, YrangeTo])
     plt.grid(True)
     plt.show()
+
+
+
+# I've commented this section because maybe we need it for byte operations
+# def innerErrorDistributionCounter(AllErrorsByIndex):
+#     answer = []
+#     for i in range(248):
+#         answer.append(AllErrorsByIndex.count(i))
+#     return answer
+
+
+# def innerErrorDistributionPercentage(AllErrorsByIndex):
+#     answer = []
+#     print("AllErrorsByIndex in function for count",AllErrorsByIndex)
+#     for i in range(248):
+#         answer.append((float(AllErrorsByIndex.count(i)) /
+#                        float(len(AllErrorsByIndex)))*100)
+#     return answer
