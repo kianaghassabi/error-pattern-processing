@@ -122,14 +122,10 @@ numberofInnerErrors = []
 indicesOferrors = []
 
 for i in range(len(allRemoved)):
-    # testlen=[3,2]
-    # print('testlen',len(testlen))
+
     count = getDiffrences(sentPacket, allRemoved[i])
     indices = getDiffrencesIndex(sentPacket, allRemoved[i])
-
     indicesOferrors.append(indices)
-    # print(allRemoved[i])
-    # print('count',count)
     numberofInnerErrors.append(count)
 # print(numberofInnerErrors)
 

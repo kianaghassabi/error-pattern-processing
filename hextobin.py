@@ -15,8 +15,6 @@ h = ['53', '65', '6E', '64', '69', '6E', '67', '20', '4D', '65', '73', '73', '61
 #  making a list of list
 hPrime = []
 hPrime.append(h)
-hPrime.append(h)
-hPrime.append(h)
 
 
 # It works
@@ -97,3 +95,8 @@ def singleGenerationToSymbolRepresentation(list):
               ]
     '''
     print("Single Generation")
+
+
+test = convertErrorPatternIntoBitGeneration(hPrime);
+
+print(test);
