@@ -247,6 +247,7 @@ def burstErrorCalculatorForBit(list):
         for j in range(1, len(list[i])):
             if(j == len(list[i]) - 1):
                 if (list[i][j-1] + 1 == list[i][j]):
+                    continuousCounter +=1
                     burstErrorData[continuousCounter] += 1
                     continuousCounter = 1
                 else:
