@@ -263,6 +263,19 @@ def burstErrorCalculatorForBit(list):
     return burstErrorData
 
 
+def countTheErrorAverageForEachSymbol(list,numberOfErrorPatterns):
+    '''
+    receives count of errors for each indicies over all received error patterns 
+    '''
+    answer = []
+    for i in range(0,int(len(list)/8)):
+        temp = 0 
+        for j in range(8):
+            temp += list[(i*8)+j]
+        answer.append(temp/numberOfErrorPatterns)
+
+    return answer
+
 # def innerErrorDistributionPercentage(AllErrorsByIndex):
 #     answer = []
 #     print("AllErrorsByIndex in function fopr count", AllErrorsByIndex)

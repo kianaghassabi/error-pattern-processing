@@ -1,5 +1,5 @@
 from hextobin import convertErrorPatternIntoBitGeneration as IntoBitGeneration , convertErrorPatternIntoBitSymbol as IntoBitSymbol
-from hextobin import RemoveDifferentSize,TotalBitFlipPerGeneration,ErrorIndices,readFromFile,ErrorIndicesforbits
+from hextobin import RemoveDifferentSize,TotalBitFlipPerGeneration,ErrorIndices,readFromFile,ErrorIndicesforbits , countTheErrorAverageForEachSymbol
 from hextobin import plotter , innerErrorDistributionCounterForBit, innerErrorDistributionPercentageForBit , burstErrorCalculatorForBit
 import matplotlib.pyplot as plt
 
@@ -12,8 +12,8 @@ def plotBitErrorDistributionOverAllErrorPatterns(IndiciesOfError):
     the count errors of each index over all given error patterns
     '''
     answer = innerErrorDistributionCounterForBit(IndiciesOfError)
+    print(answer)
     plotter(248,answer,"Bit errors indicies distribution over all packets","indicies","#Errors",0,248,0,400)
-    print (answer)
 
 
 def plotBitErrorDistributionOverAllErrorPatternsByPercentage(IndiciesOfError):
@@ -31,9 +31,16 @@ def plotBurstErrorCalculatorForBit(list):
     answer = burstErrorCalculatorForBit(list)
     plotter(248,answer,"Total number of burst error over all error patterns","burst lenght","count",0,30,0,15000)
 
-
-    print (answer)
-
+def plotAvgBitErrorPerSymbol(list,totalErrorPattern):
+    '''
+    For each symbol find the avg of error over all received error pattern
+    '''
+    errorCountPerIndicies = innerErrorDistributionCounterForBit(list)
+    
+    answer = countTheErrorAverageForEachSymbol(errorCountPerIndicies,totalErrorPattern)
+    # pass it to another function to return an array 248/8 show the avg error
+    # print(len(answer))
+    plotter(len(answer),answer,"Average error within a symbol over all packet","symbol index","avg number of error",0,len(answer),0,0.7)
 
 
 
@@ -115,6 +122,8 @@ if __name__ == "__main__":
     # TEST BURST ERROR WITH SAMPLEDATA
     # SAMPLEDATA = [[0,1,2,3,4,10,11,12,13,14],[0,1,2,5,6,7,10,11,12,13,14,15],[1,10,120,122]]
     # print(IndiciesOfError)
-    plotBurstErrorCalculatorForBit(IndiciesOfError)
+    # plotBurstErrorCalculatorForBit(IndiciesOfError)
+
+    plotAvgBitErrorPerSymbol(IndiciesOfError,len(errorPatternSplitedBit))
 
     print("End")
