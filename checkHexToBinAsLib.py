@@ -23,14 +23,15 @@ def plotBitErrorDistributionOverAllErrorPatternsByPercentage(IndiciesOfError):
     '''
     answer = innerErrorDistributionPercentageForBit(IndiciesOfError)
     plotter(248,answer,"Percentage of bit errors indicies distribution over all packets","indicies","%Error",0,248,0,1)
-    print (answer)
 
 def plotBurstErrorCalculatorForBit(list):
     '''
     plots the number of burst errors over all-error-patterns
     '''
-
     answer = burstErrorCalculatorForBit(list)
+    plotter(248,answer,"Total number of burst error over all error patterns","burst lenght","count",0,30,0,15000)
+
+
     print (answer)
 
 
@@ -112,8 +113,8 @@ if __name__ == "__main__":
     # plotBitErrorDistributionOverAllErrorPatternsByPercentage(IndiciesOfError)
 
     # TEST BURST ERROR WITH SAMPLEDATA
-    SAMPLEDATA = [[0,1,2,3,4,10,11,12,13,14],[0,1,2,5,6,7,10,11,12,13,14,15],[1,10,120,122]]
+    # SAMPLEDATA = [[0,1,2,3,4,10,11,12,13,14],[0,1,2,5,6,7,10,11,12,13,14,15],[1,10,120,122]]
     # print(IndiciesOfError)
-    plotBurstErrorCalculatorForBit(SAMPLEDATA)
+    plotBurstErrorCalculatorForBit(IndiciesOfError)
 
     print("End")
