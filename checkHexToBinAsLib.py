@@ -42,6 +42,22 @@ def plotAvgBitErrorPerSymbol(list,totalErrorPattern):
     # print(len(answer))
     plotter(len(answer),answer,"Average error within a symbol over all packet","symbol index","avg number of error",0,len(answer),0,0.7)
 
+def plotBitErrorNumberForEachGeneration(list):
+    '''
+    receives  lists of  error indicies over all generations and calculates
+    the avg number of error ( in bits ) for all received error patterns
+    '''
+    NumberOfBitErrorForEachGeneration = []
+    sum = 0 
+    for InnerListOfErrorIndicies in list:
+        NumberOfBitErrorForEachGeneration.append(len(InnerListOfErrorIndicies))
+        sum +=len(InnerListOfErrorIndicies)
+
+    answer = NumberOfBitErrorForEachGeneration
+    print("The average is ", float(sum)/float(len(NumberOfBitErrorForEachGeneration)))
+    plotter(len(answer),answer,"Bit Error within a Received error pattern","Received Packet Index","#error",0,len(answer),0,50)
+    
+
 
 
 
@@ -124,6 +140,7 @@ if __name__ == "__main__":
     # print(IndiciesOfError)
     # plotBurstErrorCalculatorForBit(IndiciesOfError)
 
-    plotAvgBitErrorPerSymbol(IndiciesOfError,len(errorPatternSplitedBit))
+    # plotAvgBitErrorPerSymbol(IndiciesOfError,len(errorPatternSplitedBit))
 
+    plotBitErrorNumberForEachGeneration(IndiciesOfError)
     print("End")
