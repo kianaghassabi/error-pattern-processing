@@ -58,7 +58,49 @@ def plotBitErrorNumberForEachGeneration(list):
     plotter(len(answer),answer,"Bit Error within a Received error pattern","Received Packet Index","#error",0,len(answer),0,50)
     
 
+def errorCorrectionPercentageForDifferentMDSCodes(list):
+    '''
+    Returns how much (percentage) of packets could be corrected with MDS code 
+    with different errorCorrectionCapabilities
+    '''
+    numberOfErrorDistributionOverAllReceivedPacket = [ 0 for i in range(8*31)]
+    for InnerListOfErrorIndicies in list:
+        numberOfErrorDistributionOverAllReceivedPacket[len(InnerListOfErrorIndicies)] +=1
 
+    CDF = [ 0 for i in range(8*31)]
+
+    CDF[0] = numberOfErrorDistributionOverAllReceivedPacket[0]
+    for i in range(1,len(numberOfErrorDistributionOverAllReceivedPacket)):
+        CDF[i] = CDF[i-1] + numberOfErrorDistributionOverAllReceivedPacket[i] 
+
+    # percentage
+    for i in range(len(CDF)):
+        CDF[i] = (CDF[i] / len(list))*100
+    print(numberOfErrorDistributionOverAllReceivedPacket)
+    answer = CDF
+    plotter(len(answer),answer,"Relation between % of the corrected packets with the MDS error correction Rate ","MDS error correction","%Correction",0,50,0,100)
+
+
+
+def errorCorrectionNumberForDifferentMDSCodes(list):
+    '''
+    Returns how much (number) of packets could be corrected with MDS code 
+    with different errorCorrectionCapabilities
+    '''
+    numberOfErrorDistributionOverAllReceivedPacket = [ 0 for i in range(8*31)]
+    for InnerListOfErrorIndicies in list:
+        numberOfErrorDistributionOverAllReceivedPacket[len(InnerListOfErrorIndicies)] +=1
+
+    CDF = [ 0 for i in range(8*31)]
+
+    CDF[0] = numberOfErrorDistributionOverAllReceivedPacket[0]
+    for i in range(1,len(numberOfErrorDistributionOverAllReceivedPacket)):
+        CDF[i] = CDF[i-1] + numberOfErrorDistributionOverAllReceivedPacket[i] 
+
+
+    print(numberOfErrorDistributionOverAllReceivedPacket)
+    answer = CDF
+    plotter(len(answer),answer,"Relation between # of the corrected packets with the MDS correction Rate ","MDS error correction rate","#Correction",0,50,0,6100)
 
 
 if __name__ == "__main__":
@@ -142,5 +184,8 @@ if __name__ == "__main__":
 
     # plotAvgBitErrorPerSymbol(IndiciesOfError,len(errorPatternSplitedBit))
 
-    plotBitErrorNumberForEachGeneration(IndiciesOfError)
+    # plotBitErrorNumberForEachGeneration(IndiciesOfError)
+
+    # errorCorrectionPercentageForDifferentMDSCodes(IndiciesOfError)
+    errorCorrectionNumberForDifferentMDSCodes(IndiciesOfError)
     print("End")
