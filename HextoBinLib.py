@@ -2,9 +2,7 @@ import string
 import matplotlib.pyplot as plt
 import numpy as np
 
-# It works
-
-
+# THIS FUNCTION WORKS WELL
 def convertErrorPatternIntoBitGeneration(list):
     ''' Entery is list of all error patterns 
     and return each generation in bit rep
@@ -30,9 +28,7 @@ def convertErrorPatternIntoBitGeneration(list):
         errorPatternsInBitRep.append(binvalues)
     return errorPatternsInBitRep
 
-# It also works fine
-
-
+# THIS FUNCTION WORKS WELL
 def convertErrorPatternIntoBitSymbol(list):
     ''' 
     Entery is list of all error patterns 
@@ -54,7 +50,6 @@ def convertErrorPatternIntoBitSymbol(list):
             binvalues.append([x for x in binaryValues])
         errorPatternsInBitRep.append(binvalues)
     return errorPatternsInBitRep
-
 
 # THIS FUNCTION WORKS WELL
 def readFromFile(fileaddress):
@@ -78,12 +73,12 @@ def readFromFile(fileaddress):
         # addding to the list of all errors so we would have a list conting other lists
         AllErrorPatterns.append(line)
     receivedPacketFile.close()
+    #number of all
+    print("len(AllErrorPatterns)",len(AllErrorPatterns))
     return AllErrorPatterns
 
 # THIS FUNCTION WORKS WELL
 # count the number of unmatched symbols
-
-
 def getDiffrences(list1, list2):
     '''
     Counts the number of different elements in two lists (Elemenet-wise)
@@ -96,8 +91,6 @@ def getDiffrences(list1, list2):
 
 # THIS FUNCTION WORKS WELL
 # per symbol
-
-
 def getDiffrencesIndex(list1, list2):
     '''
     Returns the index of which two lists (inputs) have different elements
@@ -110,8 +103,6 @@ def getDiffrencesIndex(list1, list2):
     return indecies
 
 # function for removing elements with diffrent size
-
-
 def RemoveDifferentSize(listOfElements, mysize):
     '''
     removes arrays from given 2D array (input) which they have different size form given size
@@ -133,8 +124,6 @@ def RemoveDifferentSize(listOfElements, mysize):
 
 # THIS FUNCTION WORKS WELL
 # PER SYMBOL It will return the indecices containing  errors
-
-
 def ErrorIndices(ListSentPacket, ListErrorPatterns):
     '''
     returns a 2D list of error indices due to Sentpacket (First parameter) over all given List of errror patterns
@@ -167,8 +156,6 @@ def TotalBitFlipPerGeneration(ListSentPacket, ListErrorPatterns):
 
 
 # #####################################BIT SPECIFIC OPERATIONS###########################################
-
-
 # THIS FUNCTION WORKS WELL
 # PER SYMBOL It will return the indecices containing  errors
 def ErrorIndicesforbits(ListSentPacket, ListErrorPatterns):
@@ -276,43 +263,3 @@ def countTheErrorAverageForEachSymbol(list,numberOfErrorPatterns):
 
     return answer
 
-# def innerErrorDistributionPercentage(AllErrorsByIndex):
-#     answer = []
-#     print("AllErrorsByIndex in function fopr count", AllErrorsByIndex)
-#     for j in range(len(AllErrorsByIndex)):
-#         for i in range(248):
-#             answer.append((float(AllErrorsByIndex[j].count(i)) /
-#                            float(len(AllErrorsByIndex[j])))*100)
-#     return answer
-
-
-###############################PLOT##############################
-
-# I've commented this section because maybe we need it for byte operations
-# def innerErrorDistributionCounter(AllErrorsByIndex):
-#     answer = []
-#     for i in range(248):
-#         answer.append(AllErrorsByIndex.count(i))
-#     return answer
-
-
-# def innerErrorDistributionPercentage(AllErrorsByIndex):
-#     answer = []
-#     print("AllErrorsByIndex in function for count",AllErrorsByIndex)
-#     for i in range(248):
-#         answer.append((float(AllErrorsByIndex.count(i)) /
-#                        float(len(AllErrorsByIndex)))*100)
-
-
-# THIS FUNCTION WORKS WELL
-# number of Inner Errors in each symbol per generetion
-# per symbol dar har symbol chand khata vujud darad=[1,3,4]:dar avali yeki dar dovomi 3ta dar sevomi 4 ta
-
-# (NAZARI ASKING ... ) I've commented this function because it is not different from TotalBitFlipPerGeneration function
-# def TotalBitFlipPerGenerationforbits(ListSentPacket, ListErrorPatterns):
-#     numberofInnerErrors = []
-#     for i in range(len(ListErrorPatterns)):
-#         count = getDiffrences(ListSentPacket[0], ListErrorPatterns[i])
-#         numberofInnerErrors.append(count)
-#     return numberofInnerErrors
-#     return answer
