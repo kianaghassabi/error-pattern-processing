@@ -1,5 +1,25 @@
-from HextoBinLib import plotter ,countTheErrorAverageForEachSymbol, innerErrorDistributionCounterForBit 
+from HextoBinLib import countTheErrorAverageForEachSymbol, innerErrorDistributionCounterForBit 
 from HextoBinLib import innerErrorDistributionPercentageForBit , burstErrorCalculatorForBit
+import matplotlib.pyplot as plt
+
+def plotter(numberOfBits, resultList, PlotTitle, plotXLabel, pltYLabel, XrangeFrom, XrangeTo, YrangeFrom, YrangeTo):
+    # initilizing
+    # mu = InputMu
+    # sigma = InputSimga
+    x = []
+    for i in range(numberOfBits):
+        x.append(i)
+
+    # innerErrorDistributionPercentage
+    # print(innerErrorDistributionPercentage(ListofInnerErrors)) what is it ?
+    plt.bar(x, resultList)
+    plt.title(PlotTitle)
+    plt.xlabel(plotXLabel)
+    plt.ylabel(pltYLabel)
+
+    plt.axis([XrangeFrom, XrangeTo, YrangeFrom, YrangeTo])
+    plt.grid(True)
+    plt.show()
 
 def plotBitErrorDistributionOverAllErrorPatterns(IndiciesOfError):
     '''

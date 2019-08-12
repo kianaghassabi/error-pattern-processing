@@ -25,10 +25,12 @@ if __name__ == "__main__":
 
     #read received packets from file
     recivedPack=readFromFile("ReceivedPackets1.txt")
-    print("total received packets: ")
-    print(len(recivedPack))
+    # print("total received packets: ")
+    # print(len(recivedPack))
     print(" ------ ")
     ErrorPatternsinHexByte=RemoveDifferentSize(recivedPack,31)
+    print("fucntion for byte called above")
+
 
     #remove the packets with  diffrent lengthes
     print("------BYTE-------")
@@ -46,11 +48,14 @@ if __name__ == "__main__":
     sentPacketInBits=IntoBitGeneration(sentPacket)
 
     ErrorPatternsinHexByte=RemoveDifferentSize(recivedPack,31)
+    print("fucntion for byte called above")
 
     ErrorPatternsinBinBit=IntoBitGeneration(ErrorPatternsinHexByte)
 
     #248 = 31*8
     errorPatternSplitedBit=RemoveDifferentSize(ErrorPatternsinBinBit,248)
+    print("fucntion for bit called above")
+
 
     IndiciesOfError=ErrorIndicesforbits(sentPacketInBits,errorPatternSplitedBit) 
 

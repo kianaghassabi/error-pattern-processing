@@ -1,5 +1,4 @@
 import string
-import matplotlib.pyplot as plt
 import numpy as np
 
 # THIS FUNCTION WORKS WELL
@@ -120,6 +119,7 @@ def RemoveDifferentSize(listOfElements, mysize):
         else:
             newList.append(listOfElements[i])
     # print('totalDiffrentlength',totalDiffrentlength)
+    print("totalDiffrentlength:--->",totalDiffrentlength)
     return newList
 
 # THIS FUNCTION WORKS WELL
@@ -136,7 +136,6 @@ def ErrorIndices(ListSentPacket, ListErrorPatterns):
     return indicesOferrors
 
     # THIS FUNCTION WORKS WELL
-
 
 # number of Inner Errors in each symbol per generetion
 # per symbol dar har symbol chand khata vujud darad=[1,3,4]:dar avali yeki dar dovomi 3ta dar sevomi 4 ta
@@ -198,26 +197,6 @@ def innerErrorDistributionPercentageForBit(AllErrorsByIndex):
     for i in range(0, 248):
         answer[i] = float(answer[i]) / float(numberOfAllPacket)
     return answer
-
-
-def plotter(numberOfBits, resultList, PlotTitle, plotXLabel, pltYLabel, XrangeFrom, XrangeTo, YrangeFrom, YrangeTo):
-    # initilizing
-    # mu = InputMu
-    # sigma = InputSimga
-    x = []
-    for i in range(numberOfBits):
-        x.append(i)
-
-    # innerErrorDistributionPercentage
-    # print(innerErrorDistributionPercentage(ListofInnerErrors)) what is it ?
-    plt.bar(x, resultList)
-    plt.title(PlotTitle)
-    plt.xlabel(plotXLabel)
-    plt.ylabel(pltYLabel)
-
-    plt.axis([XrangeFrom, XrangeTo, YrangeFrom, YrangeTo])
-    plt.grid(True)
-    plt.show()
 
 
 def burstErrorCalculatorForBit(list):
