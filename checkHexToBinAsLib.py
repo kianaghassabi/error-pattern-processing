@@ -2,29 +2,29 @@ from HextoBinLib import convertErrorPatternIntoBitGeneration as IntoBitGeneratio
 from HextoBinLib import RemoveDifferentSize,TotalBitFlipPerGeneration,ErrorIndices,readFromFile,ErrorIndicesforbits 
 import matplotlib.pyplot as plt
 from PlotterLib import plotBitErrorDistributionOverAllErrorPatterns,plotBitErrorDistributionOverAllErrorPatternsByPercentage,plotBurstErrorCalculatorForBit,plotAvgBitErrorPerSymbol
-from PlotterLib import errorCorrectionNumberForDifferentMDSCodes,errorCorrectionPercentageForDifferentMDSCodes
+from PlotterLib import plotBitErrorNumberForEachGeneration,errorCorrectionNumberForDifferentMDSCodes,errorCorrectionPercentageForDifferentMDSCodes
 
 if __name__ == "__main__":
 
     sentPacket = [['53', '65', '6E', '64', '69', '6E', '67', '20', '4D', '65', '73', '73', '61', '67',
                 '65', '20', '49', '73', '20', '57', '6F', '72', '6B', '69', '6E', '67', '20', '46', '69', '6E', '65']]
 
-    recivedPack = [['50', '65', '6E', '64', '69', '6E', '67', '20', '4D', '65', '73', '73', '61', '67',
-                '65', '20', '49', '73', '20', '57', '6F', '72', '6B', '69', '6E', '67', '20', '46', '69', '6E', '65']
-                ,
-                ['50', '65', '2E', '64', '39', '6E', '67', '20', '4D', '65', '73', '73', '61', '67',
-                '65', '20', '49', '73', '20', '57', '6F', '72', '6B', '69', '6E', '67', '20', '46', '69', '6E', '65']
-                ,
-                ['50', '65', '6E', '64', '69', '6E', '67', '20', '4D', '65', '73', '73', '61', '67',
-                '65', '20', '49', '73', '20', '57', '6F', '72', '6B', '69', '6E', '67', '20', '46', '69', '6E', '15']
-                ]
+    # recivedPack = [['50', '65', '6E', '64', '69', '6E', '67', '20', '4D', '65', '73', '73', '61', '67',
+    #             '65', '20', '49', '73', '20', '57', '6F', '72', '6B', '69', '6E', '67', '20', '46', '69', '6E', '65']
+    #             ,
+    #             ['50', '65', '2E', '64', '39', '6E', '67', '20', '4D', '65', '73', '73', '61', '67',
+    #             '65', '20', '49', '73', '20', '57', '6F', '72', '6B', '69', '6E', '67', '20', '46', '69', '6E', '65']
+    #             ,
+    #             ['50', '65', '6E', '64', '69', '6E', '67', '20', '4D', '65', '73', '73', '61', '67',
+    #             '65', '20', '49', '73', '20', '57', '6F', '72', '6B', '69', '6E', '67', '20', '46', '69', '6E', '15']
+    #             ]
 
     #BYTE FUNCTIONS
     #change all the receivedpack with read from file
     #convert the sent packet into bits e.g. '53'='0', '1', '0', '1', '0', '0', '1', '1'
 
     #read received packets from file
-    recivedPack=readFromFile("ReceivedPackets1.txt")
+    recivedPack=readFromFile("ReceivedPackets4.txt")
     # print("total received packets: ")
     # print(len(recivedPack))
     print(" ------ ")
@@ -37,14 +37,27 @@ if __name__ == "__main__":
 
     #THIS FUNCTION WORKS WELL
     #Errors per symbol 
-    IndiciesOfError=ErrorIndices(sentPacket,ErrorPatternsinHexByte) 
+    # IndiciesOfError=ErrorIndices(sentPacket,ErrorPatternsinHexByte) 
 
     #THIS FUNCTION WORKS WELL
     #number of Inner Errors in each symbol per generetion
-    NumberofInnerErrors=TotalBitFlipPerGeneration(sentPacket,ErrorPatternsinHexByte)
+    # NumberofInnerErrors=TotalBitFlipPerGeneration(sentPacket,ErrorPatternsinHexByte)
 
-    print("------BIT-------")
+    #plotter for bytes
+   # # 1
+    # plotBitErrorDistributionOverAllErrorPatterns(IndiciesOfError)
+    # #2
+    # plotBitErrorNumberForEachGeneration(IndiciesOfError)
+    # #3
+    # plotBitErrorDistributionOverAllErrorPatternsByPercentage(IndiciesOfError)
+    # #4
+    # plotBurstErrorCalculatorForBit(IndiciesOfError)
+    # #5
+    # plotAvgBitErrorPerSymbol(IndiciesOfError,len(ErrorPatternsinHexByte))
+    
+
     #########################################PER BITS##################################################
+    print("------BIT-------")
     sentPacketInBits=IntoBitGeneration(sentPacket)
 
     ErrorPatternsinHexByte=RemoveDifferentSize(recivedPack,31)
@@ -61,5 +74,19 @@ if __name__ == "__main__":
 
     NumberofInnerErrors=TotalBitFlipPerGeneration(sentPacketInBits,errorPatternSplitedBit)
 
-    errorCorrectionNumberForDifferentMDSCodes(IndiciesOfError)
+    # errorCorrectionNumberForDifferentMDSCodes(IndiciesOfError)
+    # plotBitErrorDistributionOverAllErrorPatterns(IndiciesOfError)
+
+        #plotter for bytes
+    #1
+    plotBitErrorDistributionOverAllErrorPatterns(IndiciesOfError)
+    #2
+    plotBitErrorNumberForEachGeneration(IndiciesOfError)
+    #3
+    plotBitErrorDistributionOverAllErrorPatternsByPercentage(IndiciesOfError)
+    #4
+    plotBurstErrorCalculatorForBit(IndiciesOfError)
+    #5
+    plotAvgBitErrorPerSymbol(IndiciesOfError,len(ErrorPatternsinHexByte))
+
     print("End")

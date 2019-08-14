@@ -64,6 +64,7 @@ def readFromFile(fileaddress):
     while True:
         # get line by line
         readline = receivedPacketFile.readline()
+        # print("readline",readline)
         readline = readline.strip()
         line = readline.split(' ')
         # end of file
