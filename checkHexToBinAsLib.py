@@ -88,9 +88,12 @@ if __name__ == "__main__":
     # plotBurstErrorCalculatorForBit(IndiciesOfError)
     #5
     # plotAvgBitErrorPerSymbol(IndiciesOfError,len(ErrorPatternsinHexByte))
+<<<<<<< HEAD
     #6
     # errorCorrectionPercentageForDifferentMDSCodes(IndiciesOfError)
     #7
     errorCorrectionNumberForDifferentMDSCodes(IndiciesOfError)
+=======
+>>>>>>> 89cc528d9f5bef81f357035be1aa025db5bfbd7a
 
     print("End")
