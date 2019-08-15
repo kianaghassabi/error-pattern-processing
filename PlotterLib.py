@@ -38,47 +38,62 @@ def plotBitErrorDistributionOverAllErrorPatternsByPercentage(IndiciesOfError):
     answer = innerErrorDistributionPercentageForBit(IndiciesOfError)
     plotter(248,answer,"Percentage of bit errors indicies distribution over all packets","indicies","%Error",0,248,0,0.2)
 
-def plotBurstErrorCalculatorForBit(mylist):
+def plotBurstErrorCalculatorForBit(IndiciesOfError):
     '''
     Receives a list of bit error indicies and plots the number of burst bit errors (Y axis) by 
     their length (X axis) over all-error-patterns
     '''
-    answer = burstErrorCalculatorForBit(mylist)
+    answer = burstErrorCalculatorForBit(IndiciesOfError)
     plotter(248,answer,"Total number of burst errors over all error patterns","Burst error lenght","#Count",0,30,0,15000)
 
-def plotAvgBitErrorPerSymbol(mylist,totalErrorPattern):
+def plotAvgBitErrorPerSymbol(IndiciesOfError,totalErrorPattern):
     '''
-    For each symbol find the avg of error over all received error pattern
+    Receives a list of bit error indicies and for each symbol plots the average number of errors
+    over all received error patterns
     '''
-    errorCountPerIndicies = innerErrorDistributionCounterForBit(mylist)
+    errorCountPerIndicies = innerErrorDistributionCounterForBit(IndiciesOfError)
     
     answer = countTheErrorAverageForEachSymbol(errorCountPerIndicies,totalErrorPattern)
     # pass it to another function to return an array 248/8 show the avg error
     # print(len(answer))
-    plotter(len(answer),answer,"Average error within a symbol over all packet","symbol index","avg number of error",0,len(answer),0,0.7)
+    plotter(len(answer),answer,"Average number of bir errors (Y axis) within a symbol  for all symbols ( X axis ) over all packet","symbol index","avg number of bit error",0,len(answer),0,0.7)
 
-def plotBitErrorNumberForEachGeneration(mylist):
+def plotBitErrorNumberForEachGeneration(IndiciesOfError):
     '''
-    receives  lists of  error indicies over all generations and calculates
-    the avg number of error ( in bits ) for all received error patterns
+    receives a list of bit error indicies over all generations and **calculates**
+    the average number of bit errors for all received error patterns
+    moreover, plots the number of bit errors within a received error patterns ( Y axis )
+    for each received packet (X axis)
     '''
+
+    #  ***  it is better to put all computational steps into another function 
+    #  *** like other functions 
     NumberOfBitErrorForEachGeneration = []
     sum = 0 
-    for InnerListOfErrorIndicies in mylist:
+    for InnerListOfErrorIndicies in IndiciesOfError:
         NumberOfBitErrorForEachGeneration.append(len(InnerListOfErrorIndicies))
         sum +=len(InnerListOfErrorIndicies)
 
     answer = NumberOfBitErrorForEachGeneration
     print("The average is ", float(sum)/float(len(NumberOfBitErrorForEachGeneration)))
-    plotter(len(answer),answer,"Bit Error within a Received error pattern","Received Packet Index","#error",0,len(answer),0,30)
+    plotter(len(answer),answer,"Number of bit errors within a received error pattern (generation) ","Received Packet Index","# Bit errors",0,len(answer),0,30)
     
-def errorCorrectionPercentageForDifferentMDSCodes(mylist):
+def errorCorrectionPercentageForDifferentMDSCodes(IndiciesOfError):
     '''
-    Returns how much (percentage) of packets could be corrected with MDS code 
-    with different errorCorrectionCapabilities
+    receives a list of bit error indicies over all received error patterns and returns  the percentage of packets
+    that could be corrected ( Y axis ) with an MDS code 
+    with different errorCorrectionCapabilities ( X axis )
     '''
+    #  Actually I'm trying to say " Age MDS code ba felan Error capabilitie estefade konim felan darsad az 
+    #  error haro dorost konim"  :-D
+
+
+    #  ***  it is better to put all computational steps into another function 
+    #  *** like other functions 
+
+
     numberOfErrorDistributionOverAllReceivedPacket = [ 0 for i in range(8*31)]
-    for InnerListOfErrorIndicies in mylist:
+    for InnerListOfErrorIndicies in IndiciesOfError:
         numberOfErrorDistributionOverAllReceivedPacket[len(InnerListOfErrorIndicies)] +=1
 
     CDF = [ 0 for i in range(8*31)]
@@ -89,18 +104,25 @@ def errorCorrectionPercentageForDifferentMDSCodes(mylist):
 
     # percentage
     for i in range(len(CDF)):
-        CDF[i] = (CDF[i] / len(mylist))*100
+        CDF[i] = (CDF[i] / len(IndiciesOfError))*100
     print(numberOfErrorDistributionOverAllReceivedPacket)
     answer = CDF
-    plotter(len(answer),answer,"Relation between % of the corrected packets with the MDS error correction Rate ","MDS error correction","%Correction",0,50,0,100)
+    plotter(len(answer),answer,"=% of the corrected packets with the different MDS error correction rates ","MDS error correction","%Correction",0,50,0,100)
 
-def errorCorrectionNumberForDifferentMDSCodes(mylist):
+def errorCorrectionNumberForDifferentMDSCodes(IndiciesOfError):
     '''
-    Returns how much (number) of packets could be corrected with MDS code 
-    with different errorCorrectionCapabilities
+    receives a list of bit error indicies over all received error patterns and returns  the number of packets
+    that could be corrected ( Y axis ) with an MDS code 
+    with different errorCorrectionCapabilities ( X axis )
     '''
+    #  Actually I'm trying to say " Age MDS code ba felan Error capabilitie estefade konim felan tedad az 
+    #  error haro dorost konim"  :-D
+
+    #  ***  it is better to put all computational steps into another function 
+    #  *** like other functions 
+
     numberOfErrorDistributionOverAllReceivedPacket = [ 0 for i in range(8*31)]
-    for InnerListOfErrorIndicies in mylist:
+    for InnerListOfErrorIndicies in IndiciesOfError:
         numberOfErrorDistributionOverAllReceivedPacket[len(InnerListOfErrorIndicies)] +=1
 
     CDF = [ 0 for i in range(8*31)]
@@ -112,6 +134,6 @@ def errorCorrectionNumberForDifferentMDSCodes(mylist):
 
     print(numberOfErrorDistributionOverAllReceivedPacket)
     answer = CDF
-    plotter(len(answer),answer,"Relation between # of the corrected packets with the MDS correction Rate ","MDS error correction rate","#Correction",0,50,0,6100)
+    plotter(len(answer),answer,"# of the corrected packets with the different MDS error correction rates","MDS error correction rate","#Correction",0,50,0,6100)
 
     
