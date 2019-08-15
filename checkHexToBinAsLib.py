@@ -79,14 +79,14 @@ if __name__ == "__main__":
 
         #plotter for bytes
     #1
-    plotBitErrorDistributionOverAllErrorPatterns(IndiciesOfError)
+    # plotBitErrorDistributionOverAllErrorPatterns(IndiciesOfError)
     #2
     plotBitErrorNumberForEachGeneration(IndiciesOfError)
     #3
-    plotBitErrorDistributionOverAllErrorPatternsByPercentage(IndiciesOfError)
+    # plotBitErrorDistributionOverAllErrorPatternsByPercentage(IndiciesOfError)
     #4
-    plotBurstErrorCalculatorForBit(IndiciesOfError)
+    # plotBurstErrorCalculatorForBit(IndiciesOfError)
     #5
-    plotAvgBitErrorPerSymbol(IndiciesOfError,len(ErrorPatternsinHexByte))
+    # plotAvgBitErrorPerSymbol(IndiciesOfError,len(ErrorPatternsinHexByte))
 
     print("End")

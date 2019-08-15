@@ -36,7 +36,7 @@ def plotBitErrorDistributionOverAllErrorPatternsByPercentage(IndiciesOfError):
     percentage of errors of each index over all given error patterns
     '''
     answer = innerErrorDistributionPercentageForBit(IndiciesOfError)
-    plotter(248,answer,"Percentage of bit errors indicies distribution over all packets","indicies","%Error",0,248,0,1)
+    plotter(248,answer,"Percentage of bit errors indicies distribution over all packets","indicies","%Error",0,248,0,0.2)
 
 def plotBurstErrorCalculatorForBit(mylist):
     '''
@@ -69,7 +69,7 @@ def plotBitErrorNumberForEachGeneration(mylist):
 
     answer = NumberOfBitErrorForEachGeneration
     print("The average is ", float(sum)/float(len(NumberOfBitErrorForEachGeneration)))
-    plotter(len(answer),answer,"Bit Error within a Received error pattern","Received Packet Index","#error",0,len(answer),0,50)
+    plotter(len(answer),answer,"Bit Error within a Received error pattern","Received Packet Index","#error",0,len(answer),0,30)
     
 def errorCorrectionPercentageForDifferentMDSCodes(mylist):
     '''
