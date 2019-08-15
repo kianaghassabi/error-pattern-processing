@@ -172,8 +172,9 @@ def ErrorIndicesforbits(ListSentPacket, ListErrorPatterns):
 
 def innerErrorDistributionCounterForBit(AllErrorsByIndex):
     '''
-    give you the total error counts in specific index over all error patterns
-    for instance, in the first bit over all error patterns we saw X number of errors
+    receives a list of  bit error indicies and returns the total number of
+    errors in each indecies over all error pattern. for instance, 
+    in the first bit over all error patterns we saw X number of errors
     '''
     answer = [0 for i in range(0, 248)]
     for i in range(len(AllErrorsByIndex)):
@@ -184,8 +185,8 @@ def innerErrorDistributionCounterForBit(AllErrorsByIndex):
 
 def innerErrorDistributionPercentageForBit(AllErrorsByIndex):
     '''
-    returns you the percentage of error in specific index over all error patterns
-    for instance, 30% of all first bit over all-error-patterns are errors 
+    receives a list of bit error indicies returns you the percentage  of error in specific index
+    over all error patterns for instance, 30% of all first bits over all-error-patterns are errors 
 
     '''
     numberOfAllPacket = len(AllErrorsByIndex)
@@ -200,20 +201,20 @@ def innerErrorDistributionPercentageForBit(AllErrorsByIndex):
     return answer
 
 
-def burstErrorCalculatorForBit(list):
+def burstErrorCalculatorForBit(IndiciesOfError):
     '''
-    Shows the number of burst errors over all-error-patterns
+    Returns the number of burst errors over all-error-patterns
     e.g., [0,10,11]
     0 error with length 0, 
     10 errors with lenght 1
     '''
     burstErrorData = [0 for i in range(0, 248)]
 
-    for i in range(len(list)):
+    for i in range(len(IndiciesOfError)):
         continuousCounter = 1
-        for j in range(1, len(list[i])):
-            if(j == len(list[i]) - 1):
-                if (list[i][j-1] + 1 == list[i][j]):
+        for j in range(1, len(IndiciesOfError[i])):
+            if(j == len(IndiciesOfError[i]) - 1):
+                if (IndiciesOfError[i][j-1] + 1 == IndiciesOfError[i][j]):
                     continuousCounter +=1
                     burstErrorData[continuousCounter] += 1
                     continuousCounter = 1
@@ -222,7 +223,7 @@ def burstErrorCalculatorForBit(list):
                     burstErrorData[1] += 1
 
             else: 
-                if (list[i][j-1] + 1 == list[i][j]):
+                if (IndiciesOfError[i][j-1] + 1 == IndiciesOfError[i][j]):
                     continuousCounter += 1
                 else:
                     burstErrorData[continuousCounter] += 1
