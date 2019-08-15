@@ -24,7 +24,7 @@ if __name__ == "__main__":
     #convert the sent packet into bits e.g. '53'='0', '1', '0', '1', '0', '0', '1', '1'
 
     #read received packets from file
-    recivedPack=readFromFile("ReceivedPackets4.txt")
+    recivedPack=readFromFile("ReceivedPackets1.txt")
     # print("total received packets: ")
     # print(len(recivedPack))
     print(" ------ ")
@@ -44,7 +44,7 @@ if __name__ == "__main__":
     # NumberofInnerErrors=TotalBitFlipPerGeneration(sentPacket,ErrorPatternsinHexByte)
 
     #plotter for bytes
-   # # 1
+    # # 1
     # plotBitErrorDistributionOverAllErrorPatterns(IndiciesOfError)
     # #2
     # plotBitErrorNumberForEachGeneration(IndiciesOfError)
@@ -61,13 +61,13 @@ if __name__ == "__main__":
     sentPacketInBits=IntoBitGeneration(sentPacket)
 
     ErrorPatternsinHexByte=RemoveDifferentSize(recivedPack,31)
-    print("fucntion for byte called above")
+    print("fucntion for byte differences called above")
 
     ErrorPatternsinBinBit=IntoBitGeneration(ErrorPatternsinHexByte)
 
     #248 = 31*8
     errorPatternSplitedBit=RemoveDifferentSize(ErrorPatternsinBinBit,248)
-    print("fucntion for bit called above")
+    print("fucntion for bit differences called above")
 
 
     IndiciesOfError=ErrorIndicesforbits(sentPacketInBits,errorPatternSplitedBit) 
@@ -77,16 +77,20 @@ if __name__ == "__main__":
     # errorCorrectionNumberForDifferentMDSCodes(IndiciesOfError)
     # plotBitErrorDistributionOverAllErrorPatterns(IndiciesOfError)
 
-        #plotter for bytes
+    #plotter for bytes
     #1
-    plotBitErrorDistributionOverAllErrorPatterns(IndiciesOfError)
+    # plotBitErrorDistributionOverAllErrorPatterns(IndiciesOfError)
     #2
-    plotBitErrorNumberForEachGeneration(IndiciesOfError)
+    # plotBitErrorNumberForEachGeneration(IndiciesOfError)
     #3
-    plotBitErrorDistributionOverAllErrorPatternsByPercentage(IndiciesOfError)
+    # plotBitErrorDistributionOverAllErrorPatternsByPercentage(IndiciesOfError)
     #4
-    plotBurstErrorCalculatorForBit(IndiciesOfError)
+    # plotBurstErrorCalculatorForBit(IndiciesOfError)
     #5
-    plotAvgBitErrorPerSymbol(IndiciesOfError,len(ErrorPatternsinHexByte))
+    # plotAvgBitErrorPerSymbol(IndiciesOfError,len(ErrorPatternsinHexByte))
+    #6
+    # errorCorrectionPercentageForDifferentMDSCodes(IndiciesOfError)
+    #7
+    errorCorrectionNumberForDifferentMDSCodes(IndiciesOfError)
 
     print("End")
