@@ -119,15 +119,15 @@ def RemoveDifferentSize(listOfElements, mysize):
             totalDiffrentlength += 1
         else:
             newList.append(listOfElements[i])
-    # print('totalDiffrentlength',totalDiffrentlength)
+    # print('totalDiffrentlength',totalDiffrentlength) 
     print("totalDiffrentlength:--->",totalDiffrentlength)
     return newList
 
 # THIS FUNCTION WORKS WELL
 # PER SYMBOL It will return the indecices containing  errors
-def ErrorIndices(ListSentPacket, ListErrorPatterns):
+def ErrorIndicesForSymbols(ListSentPacket, ListErrorPatterns):
     '''
-    returns a 2D list of error indices due to Sentpacket (First parameter) over all given List of errror patterns
+    returns a 2D list of symbol error indices due to Sentpacket (First parameter) over all given List of errror patterns
 
     '''
     indicesOferrors = []
@@ -140,7 +140,7 @@ def ErrorIndices(ListSentPacket, ListErrorPatterns):
 
 # number of Inner Errors in each symbol per generetion
 # per symbol dar har symbol chand khata vujud darad=[1,3,4]:dar avali yeki dar dovomi 3ta dar sevomi 4 ta
-def TotalBitFlipPerGeneration(ListSentPacket, ListErrorPatterns):
+def TotalFlipPerGeneration(ListSentPacket, ListErrorPatterns):
     '''
     Returns the number of (bit/Symbol) errors per symbol (if bit is considered) in each generation
     It will get a list of generation and will calculate this for all of them 
