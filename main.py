@@ -71,11 +71,11 @@ if __name__ == "__main__":
     # plotErrorDistributionOverAllErrorPatternsByPercentage(IndiciesOfError ,"symbol")
     # #4
     # plotBurstError(IndiciesOfError ,"symbol")
-
     # #5
-    # errorCorrectionNumberForDifferentMDSCodes(IndiciesOfError,"symbol")
+    # errorCorrectionPercentageForDifferentMDSCodes(IndiciesOfError,"symbol")
     # #6
-    # plotBitErrorDistributionOverAllErrorPatterns(IndiciesOfError,"symbol")
+    # errorCorrectionNumberForDifferentMDSCodes(IndiciesOfError,"symbol")
+    
     
 
     #########################################PER BITS##################################################
@@ -110,7 +110,7 @@ if __name__ == "__main__":
     #5
     # plotAvgBitErrorPerSymbol(IndiciesOfError,len(ErrorPatternsinHexByte),"bit")
     #5
-    # errorCorrectionPercentageForDifferentMDSCodes(IndiciesOfError,"bit")
+    errorCorrectionPercentageForDifferentMDSCodes(IndiciesOfError,"bit")
     #6
     # errorCorrectionNumberForDifferentMDSCodes(IndiciesOfError,"bit")
 

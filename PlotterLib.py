@@ -126,16 +126,25 @@ def errorCorrectionPercentageForDifferentMDSCodes(IndiciesOfError, mode):
 
     CDF = [ 0 for i in range(8*31)]
 
-    CDF[0] = numberOfErrorDistributionOverAllReceivedPacket[0]
-    for i in range(1,len(numberOfErrorDistributionOverAllReceivedPacket)):
+    # because of error correction rate we shouldn't count no bit/symbol errors
+    CDF[1] = numberOfErrorDistributionOverAllReceivedPacket[1]
+
+    for i in range(2,len(numberOfErrorDistributionOverAllReceivedPacket)):
         CDF[i] = CDF[i-1] + numberOfErrorDistributionOverAllReceivedPacket[i] 
+
+    correctPacket = numberOfErrorDistributionOverAllReceivedPacket[0]
 
     # percentage
     for i in range(len(CDF)):
-        CDF[i] = (CDF[i] / len(IndiciesOfError))*100
+        CDF[i] = (CDF[i] / (len(IndiciesOfError) - correctPacket ))*100
+
     print(numberOfErrorDistributionOverAllReceivedPacket)
     answer = CDF
-    plotter(len(answer),answer,"=% of the corrected packets with the different MDS error correction rates ","MDS error correction","%Correction",0,50,0,100)
+
+    if (mode == "symbol"):
+        plotter(len(answer),answer,"%corrected packets with the different MDS symbol correction rates ","MDS symbol error correction capability","%Correction",0,31,0,100)
+    else:
+        plotter(len(answer),answer,"%corrected packets with the different MDS bit correction rates ","MDS bit error correction capability","%Correction",0,50,0,100)
 
 def errorCorrectionNumberForDifferentMDSCodes(IndiciesOfError, mode):
     '''
