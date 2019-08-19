@@ -3,7 +3,7 @@ from HextoBinLib import RemoveDifferentSize,TotalFlipPerGeneration,ErrorIndicesF
 import matplotlib.pyplot as plt
 from PlotterLib import plotBitErrorDistributionOverAllErrorPatterns,plotErrorDistributionOverAllErrorPatternsByPercentage,plotBurstError,plotAvgBitErrorPerSymbol
 from PlotterLib import plotErrorNumberForEachGeneration,errorCorrectionNumberForDifferentMDSCodes,errorCorrectionPercentageForDifferentMDSCodes
-
+from math import floor
 def averageBitAndSymbolErrorsForDB(listOfNumberOfSymbolErrors,listOfNumberOfBitErrors):
 
     avgSymbolErrors = 0 
@@ -19,6 +19,42 @@ def averageBitAndSymbolErrorsForDB(listOfNumberOfSymbolErrors,listOfNumberOfBitE
 
     return
     
+
+def countTheNumberOfBitErrorInEachSymbol(indicesOferrors):
+    '''
+    receives lists of bit error locations (indices) and returns list of 
+    number of bit error within each packet
+    '''
+    # 31 : number of symbol in each generation
+    answer = [ [ 0 for j in range (31)]  for i in range(len(indicesOferrors))]
+ 
+    for i in range (len(indicesOferrors)):
+        for j in range (len(indicesOferrors[i])):
+            answer[i][floor(indicesOferrors[i][j]/8)] +=1
+    return answer
+
+
+def avgBitErrorWithinDamagedSymbols(indicesOferrors):
+    '''
+    receives lists of bit error locations (indices) and returns 
+    the average number of bit errors in damaged symbols
+    '''
+    listOfBitErrorWithinSymbols = countTheNumberOfBitErrorInEachSymbol(indicesOferrors)
+
+    damagedSymbolCounter = 0 
+    totalBitErrorsInDamagedSymbols = 0 ; 
+
+    for i in range (len(listOfBitErrorWithinSymbols)):
+        for j in range(len(listOfBitErrorWithinSymbols[i])):
+            if(listOfBitErrorWithinSymbols[i][j]!=0):
+                damagedSymbolCounter +=1
+                totalBitErrorsInDamagedSymbols +=listOfBitErrorWithinSymbols[i][j]
+
+    print("Damaged Symbols Over all packets --> ", damagedSymbolCounter )
+    print("Total bit errors in damaged symbols over all packets --> ", totalBitErrorsInDamagedSymbols )
+    print("Average bit error over all damaged symbols --> ", float(totalBitErrorsInDamagedSymbols )/float(damagedSymbolCounter))
+
+
 
 
 
@@ -107,16 +143,20 @@ if __name__ == "__main__":
     # plotErrorDistributionOverAllErrorPatternsByPercentage(IndiciesOfError,"bit")
     #4
     # plotBurstError(IndiciesOfError,"bit")
-    #5
+    #5 
     # plotAvgBitErrorPerSymbol(IndiciesOfError,len(ErrorPatternsinHexByte),"bit")
     #5
-    errorCorrectionPercentageForDifferentMDSCodes(IndiciesOfError,"bit")
+    # errorCorrectionPercentageForDifferentMDSCodes(IndiciesOfError,"bit")
     #6
     # errorCorrectionNumberForDifferentMDSCodes(IndiciesOfError,"bit")
+
+    #new ****
+    # (Nazari) : Kiana jan ino lotfan move kon to lib mortabetesh
+    
 
 
     #Average Bit and Symbol Error
     # averageBitAndSymbolErrorsForDB(numberofSymbolErrorsPerPacket,numberOfBitErrorsPerPacket)
-
+    avgBitErrorWithinDamagedSymbols(IndiciesOfError)
 
     print("End")

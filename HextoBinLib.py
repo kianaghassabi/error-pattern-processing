@@ -243,4 +243,3 @@ def countTheErrorAverageForEachSymbol(list,numberOfErrorPatterns):
         answer.append(temp/numberOfErrorPatterns)
 
     return answer
-
