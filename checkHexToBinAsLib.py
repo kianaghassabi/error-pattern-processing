@@ -1,8 +1,8 @@
 from HextoBinLib import convertErrorPatternIntoBitGeneration as IntoBitGeneration , convertErrorPatternIntoBitSymbol as IntoBitSymbol
 from HextoBinLib import RemoveDifferentSize,TotalFlipPerGeneration,ErrorIndicesForSymbols,readFromFile,ErrorIndicesforbits 
 import matplotlib.pyplot as plt
-from PlotterLib import plotBitErrorDistributionOverAllErrorPatterns,plotBitErrorDistributionOverAllErrorPatternsByPercentage,plotBurstErrorCalculatorForBit,plotAvgBitErrorPerSymbol
-from PlotterLib import plotBitErrorNumberForEachGeneration,errorCorrectionNumberForDifferentMDSCodes,errorCorrectionPercentageForDifferentMDSCodes
+from PlotterLib import plotBitErrorDistributionOverAllErrorPatterns,plotErrorDistributionOverAllErrorPatternsByPercentage,plotBurstErrorCalculatorForBit,plotAvgBitErrorPerSymbol
+from PlotterLib import plotErrorNumberForEachGeneration,errorCorrectionNumberForDifferentMDSCodes,errorCorrectionPercentageForDifferentMDSCodes
 
 def averageBitAndSymbolErrorsForDB(listOfNumberOfSymbolErrors,listOfNumberOfBitErrors):
 
@@ -42,7 +42,7 @@ if __name__ == "__main__":
     #convert the sent packet into bits e.g. '53'='0', '1', '0', '1', '0', '0', '1', '1'
 
     #read received packets from file
-    recivedPack=readFromFile("ReceivedPackets4.txt")
+    recivedPack=readFromFile("ReceivedPackets1.txt")
     # print("total received packets: ")
     # print(len(recivedPack))
     print(" ------ ")
@@ -51,7 +51,7 @@ if __name__ == "__main__":
 
 
     #remove the packets with  diffrent lengthes
-    print("------BYTE-------")
+    print("------BYTE(symbol)-------")
 
     #THIS FUNCTION WORKS WELL
     #Errors per symbol 
@@ -61,17 +61,22 @@ if __name__ == "__main__":
     #number of symbol error per generetion
     numberofSymbolErrorsPerPacket=TotalFlipPerGeneration(sentPacket,ErrorPatternsinHexByte)
 
-    #plotter for bytes
+
+    #plotter for bytes/Symbols
     # # 1
-    # plotBitErrorDistributionOverAllErrorPatterns(IndiciesOfError)
+    # plotBitErrorDistributionOverAllErrorPatterns(IndiciesOfError ,"symbol")
     # #2
-    # plotBitErrorNumberForEachGeneration(IndiciesOfError)
+    # plotErrorNumberForEachGeneration(IndiciesOfError ,"symbol")
     # #3
-    # plotBitErrorDistributionOverAllErrorPatternsByPercentage(IndiciesOfError)
+    # plotErrorDistributionOverAllErrorPatternsByPercentage(IndiciesOfError ,"symbol")
     # #4
-    # plotBurstErrorCalculatorForBit(IndiciesOfError)
+    # plotBurstErrorCalculatorForBit(IndiciesOfError ,"symbol")
     # #5
-    # plotAvgBitErrorPerSymbol(IndiciesOfError,len(ErrorPatternsinHexByte))
+    # plotAvgBitErrorPerSymbol(IndiciesOfError,len(ErrorPatternsinHexByte) ,"symbol")
+    # #6
+    # errorCorrectionNumberForDifferentMDSCodes(IndiciesOfError,"symbol")
+    # #7
+    # plotBitErrorDistributionOverAllErrorPatterns(IndiciesOfError,"symbol")
     
 
     #########################################PER BITS##################################################
@@ -92,28 +97,27 @@ if __name__ == "__main__":
 
     numberOfBitErrorsPerPacket=TotalFlipPerGeneration(sentPacketInBits,errorPatternSplitedBit)
 
-    # errorCorrectionNumberForDifferentMDSCodes(IndiciesOfError)
-    # plotBitErrorDistributionOverAllErrorPatterns(IndiciesOfError)
+    
 
-    #plotter for bytes
+    #plotter for bits
     #1
-    # plotBitErrorDistributionOverAllErrorPatterns(IndiciesOfError)
+    # plotBitErrorDistributionOverAllErrorPatterns(IndiciesOfError ,"bit")
     #2
-    # plotBitErrorNumberForEachGeneration(IndiciesOfError)
+    # plotErrorNumberForEachGeneration(IndiciesOfError,"bit")
     #3
-    # plotBitErrorDistributionOverAllErrorPatternsByPercentage(IndiciesOfError)
+    # plotErrorDistributionOverAllErrorPatternsByPercentage(IndiciesOfError,"bit")
     #4
-    # plotBurstErrorCalculatorForBit(IndiciesOfError)
+    # plotBurstErrorCalculatorForBit(IndiciesOfError,"bit")
     #5
-    # plotAvgBitErrorPerSymbol(IndiciesOfError,len(ErrorPatternsinHexByte))
+    # plotAvgBitErrorPerSymbol(IndiciesOfError,len(ErrorPatternsinHexByte),"bit")
     #6
-    # errorCorrectionPercentageForDifferentMDSCodes(IndiciesOfError)
+    # errorCorrectionPercentageForDifferentMDSCodes(IndiciesOfError,"bit")
     #7
-    # errorCorrectionNumberForDifferentMDSCodes(IndiciesOfError)
+    # errorCorrectionNumberForDifferentMDSCodes(IndiciesOfError,"bit")
 
 
     #Average Bit and Symbol Error
-    averageBitAndSymbolErrorsForDB(numberofSymbolErrorsPerPacket,numberOfBitErrorsPerPacket)
+    # averageBitAndSymbolErrorsForDB(numberofSymbolErrorsPerPacket,numberOfBitErrorsPerPacket)
 
 
     print("End")

@@ -21,25 +21,37 @@ def plotter(numberOfBits, resultList, PlotTitle, plotXLabel, pltYLabel, XrangeFr
     plt.grid(True)
     plt.show()
 # function  1
-def plotBitErrorDistributionOverAllErrorPatterns(IndiciesOfError):
+def plotBitErrorDistributionOverAllErrorPatterns(IndiciesOfError, mode):
     '''
-    Receives a list of bit error indicies and plots
-    the number of errors in each index ( Bit indicies ) over all given error patterns
+    Receives a list of bit/symbol error indicies and plots
+    the number of errors in each index ( Bit/symbol indicies ) over all given error patterns
     '''
     answer = innerErrorDistributionCounterForBit(IndiciesOfError)
     print(answer)
-    plotter(248,answer,"Number of bit errors (Y axis) for each index ( X axis) ","Indicies","# Bit errors",0,248,0,650)
+
+    if(mode == "symbol"):
+        plotter(248,answer,"Total #bit flips (Y axis) within each symbol (X axis) over all packets.","Symbol index","#Bit flips",0,30,0,500)
+    else:
+        plotter(248,answer,"Total #bit flips (Y axis) for each bit index (X axis) over all packets","Bit index","#Bit flips",0,248,0,150) 
+
 
 # function  3
-def plotBitErrorDistributionOverAllErrorPatternsByPercentage(IndiciesOfError):
+def plotErrorDistributionOverAllErrorPatternsByPercentage(IndiciesOfError, mode):
     '''
-    Receives a list of bit error indicies and plots the percentage of error (Y axis) in each index (X axis)
+    Receives a list of bit/symbol error indicies and plots the percentage of error (Y axis) in each index (X axis)
     over all error patterns for instance, 30% of all first bits over all-error-patterns are errors
     '''
-    answer = innerErrorDistributionPercentageForBit(IndiciesOfError)
-    plotter(248,answer,"Percentage of bit errors indicies distribution over all packets","indicies","%Error",0,248,0,0.2)
 
-def plotBurstErrorCalculatorForBit(IndiciesOfError):
+    # ***  the name of innerErrorDistrubutionPercentageForBit should change to innerErrorDistrubutionPercentage
+    answer = innerErrorDistributionPercentageForBit(IndiciesOfError)
+
+    if (mode =="symbol"):
+        plotter(248,answer,"Percentage of errors for each symbol indicies over all packets","Symbol index","%Error",0,30,0,0.2)
+    else:
+        plotter(248,answer,"Percentage of errors for each bit indicies over all packets","Bit index","%Error",0,248,0,0.2)
+    
+
+def plotBurstErrorCalculatorForBit(IndiciesOfError, mode):
     '''
     Receives a list of bit error indicies and plots the number of burst bit errors (Y axis) by 
     their length (X axis) over all-error-patterns
@@ -47,7 +59,7 @@ def plotBurstErrorCalculatorForBit(IndiciesOfError):
     answer = burstErrorCalculatorForBit(IndiciesOfError)
     plotter(248,answer,"Total number of burst errors over all error patterns","Burst error lenght","#Count",0,30,0,15000)
 
-def plotAvgBitErrorPerSymbol(IndiciesOfError,totalErrorPattern):
+def plotAvgBitErrorPerSymbol(IndiciesOfError,totalErrorPattern, mode):
     '''
     Receives a list of bit error indicies and for each symbol plots the average number of errors
     over all received error patterns
@@ -60,27 +72,33 @@ def plotAvgBitErrorPerSymbol(IndiciesOfError,totalErrorPattern):
     plotter(len(answer),answer,"Average number of bir errors (Y axis) within a symbol  for all symbols ( X axis ) over all packet","symbol index","avg number of bit error",0,len(answer),0,0.5)
 
 # function  2
-def plotBitErrorNumberForEachGeneration(IndiciesOfError):
+def plotErrorNumberForEachGeneration(IndiciesOfError, mode):
     '''
-    receives a list of bit error indicies over all generations and **calculates**
-    the average number of bit errors for all received error patterns
-    moreover, plots the number of bit errors within a received error patterns ( Y axis )
+    receives a list of bit/symbol error indicies over all generations and **calculates**
+    the average number of bit/symbol errors for all received error patterns
+    moreover, plots the number of bit/symbol errors within a received error patterns ( Y axis )
     for each received packet (X axis)
     '''
 
     #  ***  it is better to put all computational steps into another function 
     #  *** like other functions 
-    NumberOfBitErrorForEachGeneration = []
+    numberOfErrorForEachGeneration = []
     sum = 0 
     for InnerListOfErrorIndicies in IndiciesOfError:
-        NumberOfBitErrorForEachGeneration.append(len(InnerListOfErrorIndicies))
+        numberOfErrorForEachGeneration.append(len(InnerListOfErrorIndicies))
         sum +=len(InnerListOfErrorIndicies)
 
-    answer = NumberOfBitErrorForEachGeneration
-    print("The average is ", float(sum)/float(len(NumberOfBitErrorForEachGeneration)))
-    plotter(len(answer),answer,"Number of bit errors within a received error pattern (generation) ","Received Packet Index","# Bit errors",0,len(answer),0,30)
-    
-def errorCorrectionPercentageForDifferentMDSCodes(IndiciesOfError):
+    answer = numberOfErrorForEachGeneration
+    print("The average is ", float(sum)/float(len(numberOfErrorForEachGeneration)))
+
+    if(mode == "symbol"):
+        plotter(len(answer),answer,"Number of symbol errors within a received error pattern (generation) ","Received Packet Index","#Symbol errors",0,len(answer),0,31)
+    else:
+        plotter(len(answer),answer,"Number of bit errors within a received error pattern (generation) ","Received Packet Index","#Bit errors",0,len(answer),0,248)
+
+
+
+def errorCorrectionPercentageForDifferentMDSCodes(IndiciesOfError, mode):
     '''
     receives a list of bit error indicies over all received error patterns and returns  the percentage of packets
     that could be corrected ( Y axis ) with an MDS code 
@@ -111,7 +129,7 @@ def errorCorrectionPercentageForDifferentMDSCodes(IndiciesOfError):
     answer = CDF
     plotter(len(answer),answer,"=% of the corrected packets with the different MDS error correction rates ","MDS error correction","%Correction",0,50,0,100)
 
-def errorCorrectionNumberForDifferentMDSCodes(IndiciesOfError):
+def errorCorrectionNumberForDifferentMDSCodes(IndiciesOfError, mode):
     '''
     receives a list of bit error indicies over all received error patterns and returns  the number of packets
     that could be corrected ( Y axis ) with an MDS code 
