@@ -1,7 +1,7 @@
 from HextoBinLib import convertErrorPatternIntoBitGeneration as IntoBitGeneration , convertErrorPatternIntoBitSymbol as IntoBitSymbol
 from HextoBinLib import RemoveDifferentSize,TotalFlipPerGeneration,ErrorIndicesForSymbols,readFromFile,ErrorIndicesforbits 
 import matplotlib.pyplot as plt
-from PlotterLib import plotBitErrorDistributionOverAllErrorPatterns,plotErrorDistributionOverAllErrorPatternsByPercentage,plotBurstErrorCalculatorForBit,plotAvgBitErrorPerSymbol
+from PlotterLib import plotBitErrorDistributionOverAllErrorPatterns,plotErrorDistributionOverAllErrorPatternsByPercentage,plotBurstError,plotAvgBitErrorPerSymbol
 from PlotterLib import plotErrorNumberForEachGeneration,errorCorrectionNumberForDifferentMDSCodes,errorCorrectionPercentageForDifferentMDSCodes
 
 def averageBitAndSymbolErrorsForDB(listOfNumberOfSymbolErrors,listOfNumberOfBitErrors):
@@ -42,7 +42,7 @@ if __name__ == "__main__":
     #convert the sent packet into bits e.g. '53'='0', '1', '0', '1', '0', '0', '1', '1'
 
     #read received packets from file
-    recivedPack=readFromFile("ReceivedPackets1.txt")
+    recivedPack=readFromFile("ReceivedPackets3.txt")
     # print("total received packets: ")
     # print(len(recivedPack))
     print(" ------ ")
@@ -70,7 +70,7 @@ if __name__ == "__main__":
     # #3
     # plotErrorDistributionOverAllErrorPatternsByPercentage(IndiciesOfError ,"symbol")
     # #4
-    # plotBurstErrorCalculatorForBit(IndiciesOfError ,"symbol")
+    # plotBurstError(IndiciesOfError ,"symbol")
     # #5
     # plotAvgBitErrorPerSymbol(IndiciesOfError,len(ErrorPatternsinHexByte) ,"symbol")
     # #6
@@ -107,9 +107,9 @@ if __name__ == "__main__":
     #3
     # plotErrorDistributionOverAllErrorPatternsByPercentage(IndiciesOfError,"bit")
     #4
-    # plotBurstErrorCalculatorForBit(IndiciesOfError,"bit")
+    # plotBurstError(IndiciesOfError,"bit")
     #5
-    # plotAvgBitErrorPerSymbol(IndiciesOfError,len(ErrorPatternsinHexByte),"bit")
+    plotAvgBitErrorPerSymbol(IndiciesOfError,len(ErrorPatternsinHexByte),"bit")
     #6
     # errorCorrectionPercentageForDifferentMDSCodes(IndiciesOfError,"bit")
     #7

@@ -36,9 +36,10 @@ def plotBitErrorDistributionOverAllErrorPatterns(IndiciesOfError, mode):
 
 
 # function  3
+#  change percentage to  rate for all functions ****
 def plotErrorDistributionOverAllErrorPatternsByPercentage(IndiciesOfError, mode):
     '''
-    Receives a list of bit/symbol error indicies and plots the percentage of error (Y axis) in each index (X axis)
+    Receives a list of bit/symbol error indicies and plots the rate of error (Y axis) in each index (X axis)
     over all error patterns for instance, 30% of all first bits over all-error-patterns are errors
     '''
 
@@ -46,19 +47,25 @@ def plotErrorDistributionOverAllErrorPatternsByPercentage(IndiciesOfError, mode)
     answer = innerErrorDistributionPercentageForBit(IndiciesOfError)
 
     if (mode =="symbol"):
-        plotter(248,answer,"Percentage of errors for each symbol indicies over all packets","Symbol index","%Error",0,30,0,0.2)
+        plotter(248,answer,"Rate of errors for each symbol indicies over all packets","Symbol index"," Error rate",0,30,0,0.2)
     else:
-        plotter(248,answer,"Percentage of errors for each bit indicies over all packets","Bit index","%Error",0,248,0,0.2)
+        plotter(248,answer,"Rate of errors for each bit indicies over all packets","Bit index","Error rate",0,248,0,0.08)
     
 
-def plotBurstErrorCalculatorForBit(IndiciesOfError, mode):
+def plotBurstError(IndiciesOfError, mode):
     '''
-    Receives a list of bit error indicies and plots the number of burst bit errors (Y axis) by 
+    Receives a list of bit/symbol error indicies and plots the number of burst bit errors (Y axis) by 
     their length (X axis) over all-error-patterns
     '''
     answer = burstErrorCalculatorForBit(IndiciesOfError)
-    plotter(248,answer,"Total number of burst errors over all error patterns","Burst error lenght","#Count",0,30,0,15000)
 
+    if(mode == "symbol"):
+        plotter(248,answer,"Total number of burst symbol errors over all error patterns","Burst errors' lenght","Count",0,31,0,31000)
+    else:
+        plotter(248,answer,"Total number of burst bit errors over all error patterns","Burst errors' lenght","Count",0,8,0,6000)
+
+
+   
 def plotAvgBitErrorPerSymbol(IndiciesOfError,totalErrorPattern, mode):
     '''
     Receives a list of bit error indicies and for each symbol plots the average number of errors
