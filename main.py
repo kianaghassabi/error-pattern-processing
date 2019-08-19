@@ -42,7 +42,7 @@ if __name__ == "__main__":
     #convert the sent packet into bits e.g. '53'='0', '1', '0', '1', '0', '0', '1', '1'
 
     #read received packets from file
-    recivedPack=readFromFile("ReceivedPackets3.txt")
+    recivedPack=readFromFile("ReceivedPackets4.txt")
     # print("total received packets: ")
     # print(len(recivedPack))
     print(" ------ ")
@@ -71,11 +71,10 @@ if __name__ == "__main__":
     # plotErrorDistributionOverAllErrorPatternsByPercentage(IndiciesOfError ,"symbol")
     # #4
     # plotBurstError(IndiciesOfError ,"symbol")
+
     # #5
-    # plotAvgBitErrorPerSymbol(IndiciesOfError,len(ErrorPatternsinHexByte) ,"symbol")
-    # #6
     # errorCorrectionNumberForDifferentMDSCodes(IndiciesOfError,"symbol")
-    # #7
+    # #6
     # plotBitErrorDistributionOverAllErrorPatterns(IndiciesOfError,"symbol")
     
 
@@ -109,10 +108,10 @@ if __name__ == "__main__":
     #4
     # plotBurstError(IndiciesOfError,"bit")
     #5
-    plotAvgBitErrorPerSymbol(IndiciesOfError,len(ErrorPatternsinHexByte),"bit")
-    #6
+    # plotAvgBitErrorPerSymbol(IndiciesOfError,len(ErrorPatternsinHexByte),"bit")
+    #5
     # errorCorrectionPercentageForDifferentMDSCodes(IndiciesOfError,"bit")
-    #7
+    #6
     # errorCorrectionNumberForDifferentMDSCodes(IndiciesOfError,"bit")
 
 

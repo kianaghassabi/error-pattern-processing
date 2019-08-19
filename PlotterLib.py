@@ -76,7 +76,7 @@ def plotAvgBitErrorPerSymbol(IndiciesOfError,totalErrorPattern, mode):
     answer = countTheErrorAverageForEachSymbol(errorCountPerIndicies,totalErrorPattern)
     # pass it to another function to return an array 248/8 show the avg error
     # print(len(answer))
-    plotter(len(answer),answer,"Average number of bir errors (Y axis) within a symbol  for all symbols ( X axis ) over all packet","symbol index","avg number of bit error",0,len(answer),0,0.5)
+    plotter(len(answer),answer,"Average number of bit errors (Y axis) within each symbol( X axis )","symbol index","Average bit errors",0,len(answer)-1,0,0.3)
 
 # function  2
 def plotErrorNumberForEachGeneration(IndiciesOfError, mode):
@@ -117,6 +117,7 @@ def errorCorrectionPercentageForDifferentMDSCodes(IndiciesOfError, mode):
 
     #  ***  it is better to put all computational steps into another function 
     #  *** like other functions 
+
 
 
     numberOfErrorDistributionOverAllReceivedPacket = [ 0 for i in range(8*31)]
